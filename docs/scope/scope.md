@@ -15,7 +15,8 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 The short human pass for each shipped feature, kept here so long checklists stay out of chat. Add one line per feature when it lands, replace it when the next feature supersedes it.
 
 - **2. Design system:** open `/styleguide` at desktop and phone width, scan tokens, type scale, spacing, radius and card states. Tab through the focus walk and confirm the blue ring. Turn on reduce motion and confirm the status ping stops. Build for production and confirm `/styleguide` returns 404. Known dev warning: under reduce motion the status pill logs one hydration warning in the console, the ping still stops.
-- **3. Content model:** the home tab title and description now come from `content/site.ts`. Blank `profile.headline` and run `npm run build` to watch it stop with the field name, then restore it. Add a project to the array and it appears through the accessors with no other edit. The full runtime check runs later at `/check verify`.
+- **3. Content model:** the home tab title and description now come from `content/site.ts`. Blank `profile.headline` and run `npm run build` to watch it stop with the field name, then restore it. Add a project to the array and it appears through the accessors with no other edit. The runtime check passed on 2026-10-29.
+- **4. Internationalization:** open `/` and confirm redirect to `/en`. Switch to Bahasa Indonesia and confirm `/id` renders with Indonesian copy and active marker. Verify `/fr` returns 404. The runtime check passed on 2026-10-29.
 
 ## At a glance
 
@@ -25,7 +26,7 @@ The short human pass for each shipped feature, kept here so long checklists stay
 | 1   | Coding standards and tooling            | Foundation | done     |
 | 2   | Design system and UI foundation         | Foundation | done     |
 | 3   | Content model and data layer            | Foundation | in-progress |
-| 4   | Internationalization and locale routing | Foundation | planned  |
+| 4   | Internationalization and locale routing | Foundation | in-progress |
 | 5   | Site shell and navigation               | Slice 1    | planned  |
 | 6   | Hero section                            | Slice 1    | planned  |
 | 7   | Project index                           | Slice 1    | planned  |
@@ -75,17 +76,27 @@ One typed source of truth for profile, projects, metrics and links, seeded from 
   - [x] Accessors and the layout thread: seven accessors plus `getProfile()` in `app/layout.tsx`, satisfies AC-2, AC-3, AC-4, AC-7, AC-9
   - [x] Validation in the build: `lib/content/validate.ts` wired through `assertContentValid()`, satisfies AC-5, AC-6
   - [x] Lint and build proof: `npm run lint`, `npm run build`, and one deliberate failure, satisfies AC-5
-- [ ] Verify it: `/check verify content model and data layer`
+- [x] Verify it: `/check verify content model and data layer`
 
 Code in `content/site.ts` and `lib/content/`.
 Spec [0002](../specs/0002-content-model-and-data-layer/index.md)
 
-### 4. Internationalization and locale routing · needs a decision
+### 4. Internationalization and locale routing · in-progress
 
 English plus the second language you choose, with the language in the URL so links stay shareable. Content shape, routes and metadata all depend on this, so it comes before the first screen.
 **Done when:** every page renders in both languages, the current language is in the URL, switching keeps you on the same page, and no hardcoded English string remains in a component.
 
-- [ ] Design it (spec): `/architect internationalization and locale routing`
+- [x] Design it (spec): `/architect internationalization and locale routing`
+- [x] Build it: `/develop internationalization and locale routing`
+  - [x] i18n core helpers and date formatting: `lib/i18n/locales.ts`, `lib/i18n/path.ts`, and `lib/i18n/format.ts`, satisfies AC-1, AC-3, AC-10
+  - [x] Bilingual content model and messages: `lib/content/types.ts`, `content/site.ts`, `content/messages.ts`, and accessors in `lib/content/index.ts`, satisfies AC-4, AC-6, AC-8, AC-12
+  - [x] Validation in build and development: `lib/content/validate.ts` checking both locales and messages, satisfies AC-5, AC-6
+  - [x] Locale routing, layouts, and language switch: `app/[locale]/layout.tsx`, `app/[locale]/page.tsx`, `next.config.ts`, and preserved `app/(dev)/styleguide/`, satisfies AC-1, AC-2, AC-3, AC-7, AC-9, AC-11
+  - [x] Lint, build proof, and failure injection: verify `/en`, `/id`, root redirect, 404s, and deliberate missing field failure, satisfies AC-1, AC-5, AC-9, AC-10
+- [x] Verify it: `/check verify internationalization and locale routing`
+
+Code in `lib/i18n/`, `content/`, and `app/[locale]/`.
+Spec [0003](../specs/0003-internationalization-and-locale-routing/index.md)
 
 ## Slice 1: Walking skeleton
 

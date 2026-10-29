@@ -1,32 +1,31 @@
-import type { Metadata } from "next";
-import { Geist, JetBrains_Mono } from "next/font/google";
-import { MotionProvider } from "@/components/motion-provider";
-import { assertContentValid, getProfile } from "@/lib/content";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Geist, JetBrains_Mono } from "next/font/google"
+import { MotionProvider } from "@/components/motion-provider"
+import "@/app/globals.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-assertContentValid();
-
-const profile = getProfile();
+})
 
 export const metadata: Metadata = {
-  title: {
-    default: `${profile.name} | ${profile.role}`,
-    template: `%s | ${profile.name}`,
+  title: "Styleguide",
+  robots: {
+    index: false,
+    follow: false,
   },
-  description: profile.headline,
-};
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function StyleguideLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html
       lang="en"
@@ -36,5 +35,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
-  );
+  )
 }
+

@@ -1,7 +1,10 @@
+import { messages } from "@/content/messages"
 import { siteContent } from "@/content/site"
+import { locales } from "@/lib/i18n/locales"
 import type {
   EmailVisibility,
-  Project,
+  Messages,
+  ProjectContent,
   SiteContent,
   SocialIcon,
 } from "./types"
@@ -44,6 +47,26 @@ function checkString(errors: string[], path: string, value: unknown) {
   if (token) {
     errors.push(`${path} contains the placeholder "${token}"`)
   }
+}
+
+function checkLocalizedString(
+  errors: string[],
+  path: string,
+  field: unknown
+) {
+  if (!field || typeof field !== "object") {
+    errors.push(
+      `${path} must be a localized object with keys: ${locales.join(", ")}`
+    )
+    return
+  }
+
+  const record = field as Record<string, unknown>
+
+  locales.forEach((locale) => {
+    const localePath = `${path}.${locale}`
+    checkString(errors, localePath, record[locale])
+  })
 }
 
 function checkUrl(errors: string[], path: string, value: unknown) {
@@ -96,7 +119,7 @@ function checkStringArray(
 
 function checkProject(
   errors: string[],
-  project: Project,
+  project: ProjectContent,
   index: number,
   slugs: Map<string, number>
 ) {
@@ -120,15 +143,33 @@ function checkProject(
     }
   }
 
-  checkString(errors, `${path}.name`, project.name)
-  checkString(errors, `${path}.summary`, project.summary)
-  checkString(errors, `${path}.role`, project.role)
-  checkString(errors, `${path}.outcome`, project.outcome)
+  checkLocalizedString(errors, `${path}.name`, project.name)
+  checkLocalizedString(errors, `${path}.summary`, project.summary)
+  checkLocalizedString(errors, `${path}.role`, project.role)
+  checkLocalizedString(errors, `${path}.outcome`, project.outcome)
   checkStringArray(errors, `${path}.stack`, project.stack, 1)
-  checkString(errors, `${path}.caseStudy.problem`, project.caseStudy.problem)
-  checkString(errors, `${path}.caseStudy.approach`, project.caseStudy.approach)
-  checkString(errors, `${path}.caseStudy.built`, project.caseStudy.built)
-  checkString(errors, `${path}.caseStudy.result`, project.caseStudy.result)
+
+  checkLocalizedString(
+    errors,
+    `${path}.caseStudy.problem`,
+    project.caseStudy.problem
+  )
+  checkLocalizedString(
+    errors,
+    `${path}.caseStudy.approach`,
+    project.caseStudy.approach
+  )
+  checkLocalizedString(
+    errors,
+    `${path}.caseStudy.built`,
+    project.caseStudy.built
+  )
+  checkLocalizedString(
+    errors,
+    `${path}.caseStudy.result`,
+    project.caseStudy.result
+  )
+
   checkUrl(errors, `${path}.liveUrl`, project.liveUrl)
   checkUrl(errors, `${path}.repoUrl`, project.repoUrl)
 
@@ -145,29 +186,58 @@ function checkProject(
   }
 }
 
+function checkMessages(errors: string[]) {
+  locales.forEach((locale) => {
+    const dict = messages[locale]
+    if (!dict || typeof dict !== "object") {
+      errors.push(`messages.${locale} must be a dictionary`)
+      return
+    }
+
+    const messageKeys: Array<keyof Messages> = [
+      "language.label",
+      "language.current",
+    ]
+
+    messageKeys.forEach((key) => {
+      const path = `messages.${locale}.${key}`
+      checkString(errors, path, dict[key])
+    })
+  })
+}
+
 function checkContent(content: SiteContent): string[] {
   const errors: string[] = []
 
-  const profileStrings: Array<[string, string]> = [
-    ["name", content.profile.name],
-    ["displayName", content.profile.displayName],
-    ["pronouns", content.profile.pronouns],
-    ["role", content.profile.role],
-    ["location", content.profile.location],
-    ["timezone", content.profile.timezone],
-    ["headline", content.profile.headline],
-    ["intro", content.profile.intro],
-    ["currentlyLooking", content.profile.currentlyLooking],
-    ["availabilityLine", content.profile.availabilityLine],
-    ["experienceSummary", content.profile.experienceSummary],
-    ["rememberLine", content.profile.rememberLine],
-    ["githubUsername", content.profile.githubUsername],
-  ]
-
-  profileStrings.forEach(([field, value]) => {
-    checkString(errors, `profile.${field}`, value)
-  })
-
+  checkString(errors, "profile.name", content.profile.name)
+  checkString(errors, "profile.displayName", content.profile.displayName)
+  checkLocalizedString(errors, "profile.pronouns", content.profile.pronouns)
+  checkLocalizedString(errors, "profile.role", content.profile.role)
+  checkLocalizedString(errors, "profile.location", content.profile.location)
+  checkString(errors, "profile.timezone", content.profile.timezone)
+  checkLocalizedString(errors, "profile.headline", content.profile.headline)
+  checkLocalizedString(errors, "profile.intro", content.profile.intro)
+  checkLocalizedString(
+    errors,
+    "profile.currentlyLooking",
+    content.profile.currentlyLooking
+  )
+  checkLocalizedString(
+    errors,
+    "profile.availabilityLine",
+    content.profile.availabilityLine
+  )
+  checkLocalizedString(
+    errors,
+    "profile.experienceSummary",
+    content.profile.experienceSummary
+  )
+  checkLocalizedString(
+    errors,
+    "profile.rememberLine",
+    content.profile.rememberLine
+  )
+  checkString(errors, "profile.githubUsername", content.profile.githubUsername)
   checkString(errors, "profile.email", content.profile.email)
 
   if (
@@ -195,8 +265,8 @@ function checkContent(content: SiteContent): string[] {
     const path = `experience[${index}]`
 
     checkString(errors, `${path}.company`, role.company)
-    checkString(errors, `${path}.title`, role.title)
-    checkString(errors, `${path}.summary`, role.summary)
+    checkLocalizedString(errors, `${path}.title`, role.title)
+    checkLocalizedString(errors, `${path}.summary`, role.summary)
     checkMonth(errors, `${path}.start`, role.start)
 
     if (role.end === null) {
@@ -249,7 +319,7 @@ function checkContent(content: SiteContent): string[] {
 
   content.metrics.forEach((metric, index) => {
     checkString(errors, `metrics[${index}].value`, metric.value)
-    checkString(errors, `metrics[${index}].label`, metric.label)
+    checkLocalizedString(errors, `metrics[${index}].label`, metric.label)
   })
 
   if (content.links.length === 0) {
@@ -266,6 +336,8 @@ function checkContent(content: SiteContent): string[] {
       errors.push(`${path}.icon must be one of ${SOCIAL_ICONS.join(", ")}`)
     }
   })
+
+  checkMessages(errors)
 
   return errors
 }

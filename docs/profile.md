@@ -80,8 +80,7 @@ Full list, ordered by strength: TypeScript, JavaScript, Next.js, React, Node.js,
 
 Metric cards, label and value, as they should read on the site:
 
-1.  Value: 7 | Label: User Roles
-    Value: 100% | Label: Keamanan Tipe Data (Type-Safe) pada Backend
+1.  Value: 2 | Label: Projects
 
 GitHub username: DannyLurker
 Best public repos: Internal Management System
@@ -99,4 +98,4 @@ Email to publish: dannycode992@gmail.com
 Email shown as text, or only behind the copy button: behind the copy button
 Resume (file or link): none
 Tone, formal or conversational: Conversational
-Anything personal you want included: Passionate about bridging software engineering and bilingual tech communication (English & Mandarin) while building toward long-term tech leadership.
+Anything personal you want included: Passionate about bridging software engineering and bilingual tech communication (English & Mandarin, my mother language is Indonesian) while building toward long-term tech leadership.
