@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import { locales, localeNames, type Locale } from "@/lib/i18n/locales"
-import { swapLocalePath } from "@/lib/i18n/path"
-import type { Messages } from "@/lib/content/types"
-import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { locales, localeNames, type Locale } from "@/lib/i18n/locales";
+import { swapLocalePath } from "@/lib/i18n/path";
+import type { Messages } from "@/lib/content/types";
+import { cn } from "@/lib/utils";
 
 interface LanguageSwitchProps {
-  currentLocale: Locale
-  messages: Messages
-  className?: string
+  currentLocale: Locale;
+  messages: Messages;
+  className?: string;
 }
 
 export function LanguageSwitch({
@@ -18,41 +19,50 @@ export function LanguageSwitch({
   messages,
   className,
 }: LanguageSwitchProps) {
-  const pathname = usePathname() || `/${currentLocale}`
+  const pathname = usePathname() || `/${currentLocale}`;
 
   return (
     <nav
       aria-label={messages["language.label"]}
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border border-border bg-surface-container-low p-1",
-        className
+        "inline-flex items-center gap-1 rounded-full border border-border bg-card p-1",
+        className,
       )}
     >
       {locales.map((locale) => {
-        const isCurrent = locale === currentLocale
-        const targetPath = swapLocalePath(pathname, locale)
+        const isCurrent = locale === currentLocale;
+        const targetPath = swapLocalePath(pathname, locale);
 
         return (
           <Link
             key={locale}
             href={targetPath}
+            aria-label={localeNames[locale]}
             aria-current={isCurrent ? "page" : undefined}
             className={cn(
-              "rounded-full px-3 py-1 type-body-sm transition-colors",
+              "relative inline-flex min-h-6 items-center justify-center rounded-full px-3 type-body-sm transition-colors",
               "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               isCurrent
-                ? "bg-electric text-electric-foreground font-medium"
-                : "text-muted-foreground hover:text-foreground hover:bg-surface-container-high"
+                ? "text-primary-foreground font-medium"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
-            <span>{localeNames[locale]}</span>
+            {/* Sliding Pill Background */}
             {isCurrent && (
-              <span className="sr-only"> ({messages["language.current"]})</span>
+              <motion.span
+                layoutId="active-locale-pill"
+                className="absolute inset-0 rounded-full bg-primary"
+                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              />
             )}
+
+            {/* Label Content */}
+            <span className="relative z-10">
+              <span>{localeNames[locale]}</span>
+            </span>
           </Link>
-        )
+        );
       })}
     </nav>
-  )
+  );
 }
-

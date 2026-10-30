@@ -11,7 +11,7 @@ function Section({
   return (
     <section
       className={cn(
-        "py-xl",
+        "scroll-mt-20 py-xl",
         bordered && "border-t border-border",
         className
       )}

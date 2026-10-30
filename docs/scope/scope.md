@@ -27,7 +27,7 @@ The short human pass for each shipped feature, kept here so long checklists stay
 | 2   | Design system and UI foundation         | Foundation | done     |
 | 3   | Content model and data layer            | Foundation | in-progress |
 | 4   | Internationalization and locale routing | Foundation | in-progress |
-| 5   | Site shell and navigation               | Slice 1    | planned  |
+| 5   | Site shell and navigation               | Slice 1    | in-progress |
 | 6   | Hero section                            | Slice 1    | planned  |
 | 7   | Project index                           | Slice 1    | planned  |
 | 8   | Project detail page                     | Slice 1    | planned  |
@@ -100,12 +100,22 @@ Spec [0003](../specs/0003-internationalization-and-locale-routing/index.md)
 
 ## Slice 1: Walking skeleton
 
-### 5. Site shell and navigation · planned
+### 5. Site shell and navigation · in-progress
 
 The frame every page sits in: header, mobile menu, footer and the section rhythm from the design. This is the thread the rest of the site hangs on.
 **Done when:** header, menu and footer render on every page, the menu works by keyboard and traps nothing, the current section is marked, and the layout matches the fixed width grid at desktop, tablet and mobile.
 
-- [ ] Build it: `/develop site shell and navigation`
+- [x] Design it (spec): `/architect site shell and navigation`
+- [x] Build it: `/develop site shell and navigation`
+  - [x] Shared section list and shell copy: `lib/navigation.ts` and the messages keys, satisfies AC-2, AC-8
+  - [x] Locale frame, header, desktop nav and active marking: `app/[locale]/layout.tsx` and `components/layout/`, satisfies AC-1, AC-2, AC-3, AC-5, AC-10
+  - [x] Mobile disclosure, language switch and footer: `components/layout/` and `components/language-switch.tsx`, satisfies AC-4, AC-6, AC-7
+  - [x] Temporary anchors and the localized 404: the home placeholders and `app/[locale]/not-found.tsx`, satisfies AC-2, AC-3, AC-9
+  - [x] Lint, build and hands on checks at three widths and both locales, satisfies AC-1 to AC-11
+- [ ] Verify it: `/check verify site shell and navigation`
+
+Code in `lib/navigation.ts`, `components/layout/`, `components/language-switch.tsx`, `app/[locale]/` and `content/messages.ts`.
+Spec [0004](../specs/0004-site-shell-and-navigation.md)
 
 ### 6. Hero section · planned
 

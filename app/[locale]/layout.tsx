@@ -1,8 +1,13 @@
 import type { Metadata } from "next"
 import { Geist, JetBrains_Mono } from "next/font/google"
 import { MotionProvider } from "@/components/motion-provider"
+import { SkipLink } from "@/components/layout/skip-link"
+import { SiteFooter } from "@/components/layout/site-footer"
+import { SiteHeader } from "@/components/layout/site-header"
 import {
   assertContentValid,
+  getLinks,
+  getMessages,
   getProfile,
   locales,
   requireLocale,
@@ -53,13 +58,37 @@ export default async function LocaleLayout({
   const { locale: rawLocale } = await params
   const locale = requireLocale(rawLocale)
 
+  const profile = getProfile(locale)
+  const messages = getMessages(locale)
+  const links = getLinks()
+
   return (
     <html
       lang={locale}
       className={`${geistSans.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <SkipLink label={messages["skip.label"]} />
+          <SiteHeader
+            locale={locale}
+            displayName={profile.displayName}
+            messages={messages}
+          />
+          <main
+            id="main"
+            tabIndex={-1}
+            className="flex flex-1 flex-col outline-none"
+          >
+            {children}
+          </main>
+          <SiteFooter
+            locale={locale}
+            profile={profile}
+            links={links}
+            messages={messages}
+          />
+        </MotionProvider>
       </body>
     </html>
   )

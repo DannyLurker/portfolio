@@ -194,10 +194,7 @@ function checkMessages(errors: string[]) {
       return
     }
 
-    const messageKeys: Array<keyof Messages> = [
-      "language.label",
-      "language.current",
-    ]
+    const messageKeys = Object.keys(messages.en) as Array<keyof Messages>
 
     messageKeys.forEach((key) => {
       const path = `messages.${locale}.${key}`

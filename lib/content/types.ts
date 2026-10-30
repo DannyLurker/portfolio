@@ -134,4 +134,17 @@ export type SiteContent = {
 export type Messages = {
   "language.label": string
   "language.current": string
+  "nav.label": string
+  "nav.work": string
+  "nav.experience": string
+  "nav.contact": string
+  "nav.openMenu": string
+  "nav.closeMenu": string
+  "skip.label": string
+  "footer.navLabel": string
+  "footer.socialLabel": string
+  "footer.builtWith": string
+  "notFound.title": string
+  "notFound.description": string
+  "notFound.home": string
 }
