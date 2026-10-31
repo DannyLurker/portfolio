@@ -15,8 +15,14 @@ export const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M18.901 1.153h3.308l-7.227 8.26L23.484 22.5h-6.769l-5.3-6.932L5.348 22.5H2.037l7.73-8.835L1.333 1.153h6.941l4.79 6.326 5.837-6.326Zm-1.16 19.131h1.833L7.151 3.252H5.184L17.741 20.284Z" />
   </svg>
 );
 

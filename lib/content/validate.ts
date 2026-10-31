@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs"
+import { join } from "node:path"
 import { messages } from "@/content/messages"
 import { siteContent } from "@/content/site"
 import { locales } from "@/lib/i18n/locales"
@@ -20,7 +22,7 @@ const PLACEHOLDER_TOKENS = [
   "example.com",
   "placeholder",
 ]
-const SOCIAL_ICONS: SocialIcon[] = ["github", "x", "linkedin", "instagram"]
+const SOCIAL_ICONS: SocialIcon[] = ["github", "twitter", "linkedin", "instagram"]
 const EMAIL_VISIBILITIES: EmailVisibility[] = ["copy", "text"]
 
 function isNonEmptyString(value: unknown): value is string {
@@ -148,6 +150,36 @@ function checkProject(
   checkLocalizedString(errors, `${path}.role`, project.role)
   checkLocalizedString(errors, `${path}.outcome`, project.outcome)
   checkStringArray(errors, `${path}.stack`, project.stack, 1)
+
+  const cover = project.cover
+  if (!cover || typeof cover !== "object") {
+    errors.push(`${path}.cover must be an object`)
+  } else {
+    checkString(errors, `${path}.cover.src`, cover.src)
+    checkLocalizedString(errors, `${path}.cover.alt`, cover.alt)
+    for (const dimension of ["width", "height"] as const) {
+      if (!Number.isInteger(cover[dimension]) || cover[dimension] <= 0) {
+        errors.push(`${path}.cover.${dimension} must be a positive integer`)
+      }
+    }
+
+    if (isNonEmptyString(cover.src) && isNonEmptyString(project.slug)) {
+      const prefix = `/projects/${project.slug}/`
+      if (!cover.src.startsWith(prefix)) {
+        errors.push(`${path}.cover.src must start with ${prefix}`)
+      } else {
+        const imageParts = cover.src.slice(1).split(/[\\/]/)
+        if (imageParts.some((part) => part === "." || part === "..")) {
+          errors.push(`${path}.cover.src must not traverse directories`)
+        } else {
+          const imagePath = join(process.cwd(), "public", ...imageParts)
+          if (!existsSync(imagePath)) {
+            errors.push(`${path}.cover.src does not exist under public`)
+          }
+        }
+      }
+    }
+  }
 
   checkLocalizedString(
     errors,

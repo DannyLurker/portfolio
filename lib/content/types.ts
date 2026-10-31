@@ -2,7 +2,7 @@ import type { Locale } from "@/lib/i18n/locales"
 
 export type EmailVisibility = "copy" | "text"
 
-export type SocialIcon = "github" | "x" | "linkedin" | "instagram"
+export type SocialIcon = "github" | "twitter" | "linkedin" | "instagram"
 
 export type Localized<T> = Record<Locale, T>
 export type LocalizedString = Localized<string>
@@ -51,7 +51,15 @@ export type Project = {
   liveUrl: string | null
   repoUrl: string | null
   private: boolean
+  cover: ProjectCover
   caseStudy: ProjectCaseStudy
+}
+
+export type ProjectCover = {
+  src: string
+  alt: string
+  width: number
+  height: number
 }
 
 export type Metric = {
@@ -114,7 +122,15 @@ export type ProjectContent = {
   liveUrl: string | null
   repoUrl: string | null
   private: boolean
+  cover: ProjectCoverContent
   caseStudy: ProjectCaseStudyContent
+}
+
+export type ProjectCoverContent = {
+  src: string
+  alt: LocalizedString
+  width: number
+  height: number
 }
 
 export type MetricContent = {
@@ -147,4 +163,30 @@ export type Messages = {
   "notFound.title": string
   "notFound.description": string
   "notFound.home": string
+  "project.back": string
+  "project.liveSite": string
+  "project.source": string
+  "project.private": string
+  "project.stackLabel": string
+  "project.part.problem": string
+  "project.part.approach": string
+  "project.part.built": string
+  "project.part.outcome": string
+  "projects.heading": string
+  "projects.empty": string
+  "metrics.heading": string
+  "experience.heading": string
+  "experience.current": string
+  "experience.present": string
+  "experience.rangeTo": string
+  "contact.heading": string
+  "contact.name": string
+  "contact.email": string
+  "contact.message": string
+  "contact.subject": string
+  "contact.submit": string
+  "contact.copyEmail": string
+  "contact.copySuccess": string
+  "contact.copyFailure": string
+  "contact.socialLabel": string
 }

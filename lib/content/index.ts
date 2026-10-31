@@ -68,6 +68,12 @@ export function getProjects(locale: Locale): Project[] {
     liveUrl: project.liveUrl,
     repoUrl: project.repoUrl,
     private: project.private,
+    cover: {
+      src: project.cover.src,
+      alt: resolveString(project.cover.alt, locale),
+      width: project.cover.width,
+      height: project.cover.height,
+    },
     caseStudy: {
       problem: resolveString(project.caseStudy.problem, locale),
       approach: resolveString(project.caseStudy.approach, locale),
@@ -93,6 +99,12 @@ export function getProjectBySlug(
     liveUrl: project.liveUrl,
     repoUrl: project.repoUrl,
     private: project.private,
+    cover: {
+      src: project.cover.src,
+      alt: resolveString(project.cover.alt, locale),
+      width: project.cover.width,
+      height: project.cover.height,
+    },
     caseStudy: {
       problem: resolveString(project.caseStudy.problem, locale),
       approach: resolveString(project.caseStudy.approach, locale),
@@ -100,6 +112,10 @@ export function getProjectBySlug(
       result: resolveString(project.caseStudy.result, locale),
     },
   }
+}
+
+export function getProjectSlugs(): string[] {
+  return siteContent.projects.map((project) => project.slug)
 }
 
 export function getSkills(): Skills {
@@ -150,6 +166,8 @@ export type {
   Profile,
   ProfileContent,
   Project,
+  ProjectCover,
+  ProjectCoverContent,
   ProjectCaseStudy,
   ProjectCaseStudyContent,
   ProjectContent,

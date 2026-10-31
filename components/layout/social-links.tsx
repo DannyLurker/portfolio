@@ -9,7 +9,7 @@ const icons: Record<
   React.ComponentType<React.SVGProps<SVGSVGElement>>
 > = {
   github: GithubIcon,
-  x: XIcon,
+  twitter: XIcon,
   linkedin: LinkedinIcon,
   instagram: InstagramIcon,
 };
@@ -26,7 +26,7 @@ function SocialLinks({
   return (
     <ul
       aria-label={label}
-      className={cn("flex flex-wrap items-center gap-1", className)}
+      className={cn("flex flex-wrap items-center gap-sm", className)}
     >
       {links.map((link) => {
         const Icon = icons[link.icon];
@@ -35,11 +35,15 @@ function SocialLinks({
           <li key={link.href}>
             <Link
               href={link.href}
-              variant="icon"
+              variant="nav"
               aria-label={link.label}
-              className="size-11 [&_svg]:size-5"
+              className="group/social inline-flex min-h-11 min-w-11 items-center justify-center gap-sm rounded-md border border-border bg-transparent px-md py-sm type-body-sm text-muted-foreground transition-colors hover:border-border-accent hover:bg-card-hover hover:text-electric active:border-border-accent active:bg-accent active:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              <Icon aria-hidden="true" />
+              <Icon
+                aria-hidden="true"
+                className="size-4 shrink-0 transition-colors group-hover/social:text-electric"
+              />
+              <span>{link.label}</span>
             </Link>
           </li>
         );

@@ -181,7 +181,7 @@ The feature has no HTTP endpoints. This table is the component and module surfac
 | Footer identity      | name and role                          | `getProfile(locale).name`, `.role`                                                                           |
 | Footer nav           | the same three links                   | `siteSections`, `sectionHref`, the nav message keys                                                          |
 | Social links         | labels, hrefs and icons                | `getLinks()` from `content/site.ts`                                                                          |
-| Copyright year       | the build year                         | `new Date().getFullYear()` read once at module load                                                        |
+| Copyright year       | the build year                         | `new Date().getFullYear()` read once at module load                                                          |
 | Copyright line       | `© {year} {name}. Built with Next.js.` | year, `profile.name`, `messages["footer.builtWith"]`                                                         |
 | 404 language         | `en` or `id`                           | the `locale` route parameter through `useParams`, validated with `isLocale`, falling back to `defaultLocale` |
 | 404 copy             | title, description, home link          | `messages["notFound.title"]`, `["notFound.description"]`, `["notFound.home"]`                                |

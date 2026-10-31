@@ -91,6 +91,15 @@ export const siteContent: SiteContent = {
       liveUrl: null,
       repoUrl: "https://github.com/DannyLurker/internal-management-system",
       private: false,
+      cover: {
+        src: "/projects/internal-management-system/homepage.png",
+        alt: {
+          en: "Internal Management System dashboard with inventory and operational summaries",
+          id: "Dasbor Internal Management System dengan ringkasan inventaris dan operasional",
+        },
+        width: 1920,
+        height: 1080,
+      },
       caseStudy: {
         problem: {
           en: "Organizations need unified internal systems to handle complex operational workflows and data tracking reliably.",
@@ -130,7 +139,7 @@ export const siteContent: SiteContent = {
   },
   metrics: [
     {
-      value: "2",
+      value: "1",
       label: {
         en: "Projects",
         id: "Proyek",
@@ -146,7 +155,7 @@ export const siteContent: SiteContent = {
     {
       label: "X",
       href: "https://x.com/DannyLurker",
-      icon: "x",
+      icon: "twitter",
     },
     {
       label: "LinkedIn",

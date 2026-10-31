@@ -20,8 +20,11 @@ _Steps derived from spec 0005 requirements. `/check verify` runs these; `/test` 
 
 ## Acceptance-criteria coverage
 
-- The spec is `Assumed` and carries no IDed acceptance criteria; coverage maps to the three `Done when` lines of scope feature 6.
-- Every hero element renders from the content source in both languages: steps 1, 2, 7.
-- The availability dot animates and respects reduced motion: steps 1, 5.
-- The copy contains no invented detail: step 8.
-- The primary action from the assumed decision: step 3.
+- **AC-1** content source in both languages: steps 1, 2, 7.
+- **AC-2** one `h1`, the name, naming the section: steps 1, 2.
+- **AC-3** one primary action with the localized label to `#contact`: steps 1, 2, 3, 8.
+- **AC-4** the ping and reduced motion: steps 1, 5.
+- **AC-5** the location and timezone line, separator hidden from assistive tech: step 1.
+- **AC-6** narrow viewport and keyboard focus: steps 4, 6.
+- **AC-7** primitives, tokens and the glow: steps 1, 8.
+- **AC-8** lint and build: the Commands section.

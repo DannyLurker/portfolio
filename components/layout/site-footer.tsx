@@ -49,8 +49,7 @@ function SiteFooter({
           </nav>
         </div>
 
-        <div className="mt-lg flex flex-col gap-md border-t border-border pt-lg md:flex-row md:items-center md:justify-between">
-          <SocialLinks links={links} label={messages["footer.socialLabel"]} />
+        <div className="mt-lg flex flex-col items-center gap-md border-t border-border pt-lg">
           <p className="type-mono-code text-muted-foreground">{copyright}</p>
         </div>
       </Container>

@@ -26,15 +26,15 @@ The short human pass for each shipped feature, kept here so long checklists stay
 | A   | Next.js scaffold                        | Foundation | existing    |
 | 1   | Coding standards and tooling            | Foundation | done        |
 | 2   | Design system and UI foundation         | Foundation | done        |
-| 3   | Content model and data layer            | Foundation | in-progress |
-| 4   | Internationalization and locale routing | Foundation | in-progress |
-| 5   | Site shell and navigation               | Slice 1    | in-progress |
-| 6   | Hero section                            | Slice 1    | in-progress |
-| 7   | Project index                           | Slice 1    | planned     |
-| 8   | Project detail page                     | Slice 1    | planned     |
-| 9   | Metric cards                            | Slice 2    | planned     |
-| 10  | Experience section                      | Slice 2    | planned     |
-| 11  | Contact section                         | Slice 2    | planned     |
+| 3   | Content model and data layer            | Foundation | done        |
+| 4   | Internationalization and locale routing | Foundation | done        |
+| 5   | Site shell and navigation               | Slice 1    | done        |
+| 6   | Hero section                            | Slice 1    | done        |
+| 8   | Project detail page                     | Slice 1    | done        |
+| 7   | Project index                           | Slice 1    | in-progress |
+| 9   | Metric cards                            | Slice 2    | in-progress |
+| 10  | Experience section                      | Slice 2    | in-progress |
+| 11  | Contact section                         | Slice 2    | in-progress |
 | 12  | Contribution heatmap                    | Slice 3    | planned     |
 | 13  | Activity feed                           | Slice 3    | planned     |
 | 14  | SEO and share metadata                  | Slice 4    | planned     |
@@ -66,7 +66,7 @@ Turn `DESIGN.md` into tokens and base components so every screen looks like one 
 Code in `app/globals.css`, `app/layout.tsx`, `components/ui/`, `components/`, `components/layout/` and the development only `app/styleguide/page.tsx`.
 Spec [0001](../specs/0001-design-system-foundation/index.md)
 
-### 3. Content model and data layer · in-progress
+### 3. Content model and data layer · done
 
 One typed source of truth for profile, projects, metrics and links, seeded from your personal information README, so the site reads real content and a new project is one entry, not scattered edits. The shape decides what every page can render.
 **Done when:** the personal information file exists and holds your real details, adding one project entry produces its page with no other edits, profile and links come from the same source, and no placeholder copy can ship unnoticed.
@@ -82,7 +82,7 @@ One typed source of truth for profile, projects, metrics and links, seeded from 
 Code in `content/site.ts` and `lib/content/`.
 Spec [0002](../specs/0002-content-model-and-data-layer/index.md)
 
-### 4. Internationalization and locale routing · in-progress
+### 4. Internationalization and locale routing · done
 
 English plus the second language you choose, with the language in the URL so links stay shareable. Content shape, routes and metadata all depend on this, so it comes before the first screen.
 **Done when:** every page renders in both languages, the current language is in the URL, switching keeps you on the same page, and no hardcoded English string remains in a component.
@@ -101,7 +101,7 @@ Spec [0003](../specs/0003-internationalization-and-locale-routing/index.md)
 
 ## Slice 1: Walking skeleton
 
-### 5. Site shell and navigation · in-progress
+### 5. Site shell and navigation · done
 
 The frame every page sits in: header, mobile menu, footer and the section rhythm from the design. This is the thread the rest of the site hangs on.
 **Done when:** header, menu and footer render on every page, the menu works by keyboard and traps nothing, the current section is marked, and the layout matches the fixed width grid at desktop, tablet and mobile.
@@ -118,7 +118,7 @@ The frame every page sits in: header, mobile menu, footer and the section rhythm
 Code in `lib/navigation.ts`, `components/layout/`, `components/language-switch.tsx`, `app/[locale]/` and `content/messages.ts`.
 Spec [0004](../specs/0004-site-shell-and-navigation.md)
 
-### 6. Hero section · in-progress
+### 6. Hero section · done
 
 The first screen: name, role, headline, intro, availability dot and primary action, all from your content.
 **Done when:** every hero element renders from the content source in both languages, the availability dot animates and respects reduced motion preferences, and the copy contains no invented detail.
@@ -129,44 +129,69 @@ The first screen: name, role, headline, intro, availability dot and primary acti
   - [x] Lint, build and both locales render, satisfies the copy and locale lines
 
 Code in `components/layout/hero.tsx`, `content/messages.ts`, `lib/content/types.ts` and `app/[locale]/page.tsx`.
-Spec [0005](../specs/0005-hero-section/index.md) (assumed, owes ratification)
+Spec [0005](../specs/0005-hero-section/index.md)
 
-### 7. Project index · planned
-
-The numbered project list from the design, the main way a visitor reaches your work.
-**Done when:** projects show in the design's index style with order number, title, stack badges and an external link, each row opens its project page, hover and focus states match the design, and an empty state exists.
-
-- [ ] Build it: `/develop project index`
-
-### 8. Project detail page · needs a decision
+### 8. Project detail page · done
 
 One page per project, a short case study: the problem, your approach, what you built, the outcome and screenshots. The Figma covers the home page only, so the page layout and section order are the decision.
 **Done when:** each project has its own URL with title, summary, stack, links, a short case study body and screenshots, an unknown slug shows the not found page, and the page is shareable with its own metadata.
 
-- [ ] Design it (spec): `/architect project detail page`
+- [x] Design it (spec): `/architect project detail page`
+- [x] Build it: `/develop project detail page`
+  - [x] Content model, cover data and validator: `lib/content/types.ts`, `lib/content/index.ts`, `content/site.ts`, `public/projects/`, `lib/content/validate.ts`, satisfies AC-2, AC-3, AC-8
+  - [x] Message keys for the labels and actions: `content/messages.ts`, satisfies AC-2, AC-4, AC-7
+  - [x] Route, static params, metadata and unknown slug: `app/[locale]/projects/[slug]/page.tsx`, satisfies AC-1, AC-5, AC-6
+  - [x] Page composition, actions and back links, satisfies AC-2, AC-3, AC-4, AC-7, AC-9
+- [x] Verify it: `/check verify project detail page`
+
+Spec [0006](../specs/0006-project-detail-page/index.md)
+
+### 7. Project index · in-progress
+
+The numbered project list from the design, the main way a visitor reaches your work. It lands after the detail page so every row points at a real destination.
+**Done when:** projects show in the design's index style with order number, title, stack badges and an external link, each row opens its project page, hover and focus states match the design, and an empty state exists.
+
+- [x] Build it: `/develop project index`
+- [x] Verify it: `/check verify project index`
+
+Code in `components/layout/project-index.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`.
 
 ## Slice 2: Depth
 
-### 9. Metric cards · planned
+### 9. Metric cards · in-progress
 
 The measurable proof row from the design: the numbers you want a recruiter to see first.
 **Done when:** your real labels and values render from the content source, the mono stat treatment matches the design, and the row reflows to one or two columns on mobile without clipping.
 
-- [ ] Build it: `/develop metric cards`
+- [x] Build it: `/develop metric cards`
+- [x] Verify it: `/check verify metric cards`
 
-### 10. Experience section · planned
+Code in `components/layout/metric-cards.tsx`, `components/metric-card.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`.
+
+### 10. Experience section · in-progress
 
 Your roles in the design's card and spine language, the proof that the projects came from real jobs. It is not in the Figma, so it reuses the existing card and section rhythm rather than inventing a new visual idea.
 **Done when:** roles render from the content source in both languages with company, title, dates and one line each, the current role is marked, and the section sits above contact without breaking the section rhythm.
 
-- [ ] Build it: `/develop experience section`
+- [x] Build it: `/develop experience section`
+- [ ] Verify it: `/check verify experience section`
 
-### 11. Contact section · planned
+Code in `components/layout/experience-section.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`.
+
+### 11. Contact section · in-progress
 
 The closing section: the form styled as in the design that opens a prefilled mail draft, plus copy email and social links. No backend.
 **Done when:** submitting opens a prefilled mail draft to your address, the address can be copied with visible feedback, social links are labelled for screen readers, and the whole section is keyboard usable.
 
-- [ ] Build it: `/develop contact section`
+- [x] Design it (spec): `/architect contact section`
+- [x] Build it: `/develop contact section`
+  - [x] Add localized form copy, labels and subject templates (AC-1, AC-3, AC-4, AC-6, AC-7, AC-8)
+  - [x] Build the validated form and prefilled mail draft (AC-2, AC-3, AC-4, AC-5)
+  - [x] Add email copy feedback and accessible social links (AC-6, AC-7)
+  - [x] Bind the section and complete responsive and keyboard behavior (AC-1, AC-7, AC-8, AC-9)
+- [x] Verify it: `/check verify contact section`
+
+Spec [0008](../specs/0008-contact-section/index.md) · code in `components/layout/contact-section.tsx`, `components/layout/contact-form.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`
 
 ## Slice 3: Live proof
 
@@ -204,6 +229,7 @@ Out of scope for this pass, kept so the plan stays honest.
 - **Real contact form delivery**: messages sent without a mail app · needs a decision
 - **Product analytics**: visits, sources and conversion · needs a decision
 - **More languages**: beyond the second one · needs a decision
+- **Project result and outcome fields**: `caseStudy.result` and `outcome` overlap once outcome is the fourth case study row · needs a decision
 
 ## Legend
 
