@@ -17,26 +17,27 @@ The short human pass for each shipped feature, kept here so long checklists stay
 - **2. Design system:** open `/styleguide` at desktop and phone width, scan tokens, type scale, spacing, radius and card states. Tab through the focus walk and confirm the blue ring. Turn on reduce motion and confirm the status ping stops. Build for production and confirm `/styleguide` returns 404. Known dev warning: under reduce motion the status pill logs one hydration warning in the console, the ping still stops.
 - **3. Content model:** the home tab title and description now come from `content/site.ts`. Blank `profile.headline` and run `npm run build` to watch it stop with the field name, then restore it. Add a project to the array and it appears through the accessors with no other edit. The runtime check passed on 2026-10-29.
 - **4. Internationalization:** open `/` and confirm redirect to `/en`. Switch to Bahasa Indonesia and confirm `/id` renders with Indonesian copy and active marker. Verify `/fr` returns 404. The runtime check passed on 2026-10-29.
+- **6. Hero section:** open `/en` and `/id`, confirm the status pill with its animated dot, the location line, role, the name as the page title, the headline, the intro and the `Get in touch` / `Hubungi saya` button; tab to the button and confirm the focus ring; turn on reduce motion and confirm the ping stops; activate the button and confirm it lands on the contact section. Built and self checked on 2026-10-31.
 
 ## At a glance
 
-| #   | Feature                                 | Phase      | Status   |
-| --- | --------------------------------------- | ---------- | -------- |
-| A   | Next.js scaffold                        | Foundation | existing |
-| 1   | Coding standards and tooling            | Foundation | done     |
-| 2   | Design system and UI foundation         | Foundation | done     |
+| #   | Feature                                 | Phase      | Status      |
+| --- | --------------------------------------- | ---------- | ----------- |
+| A   | Next.js scaffold                        | Foundation | existing    |
+| 1   | Coding standards and tooling            | Foundation | done        |
+| 2   | Design system and UI foundation         | Foundation | done        |
 | 3   | Content model and data layer            | Foundation | in-progress |
 | 4   | Internationalization and locale routing | Foundation | in-progress |
 | 5   | Site shell and navigation               | Slice 1    | in-progress |
-| 6   | Hero section                            | Slice 1    | planned  |
-| 7   | Project index                           | Slice 1    | planned  |
-| 8   | Project detail page                     | Slice 1    | planned  |
-| 9   | Metric cards                            | Slice 2    | planned  |
-| 10  | Experience section                      | Slice 2    | planned  |
-| 11  | Contact section                         | Slice 2    | planned  |
-| 12  | Contribution heatmap                    | Slice 3    | planned  |
-| 13  | Activity feed                           | Slice 3    | planned  |
-| 14  | SEO and share metadata                  | Slice 4    | planned  |
+| 6   | Hero section                            | Slice 1    | in-progress |
+| 7   | Project index                           | Slice 1    | planned     |
+| 8   | Project detail page                     | Slice 1    | planned     |
+| 9   | Metric cards                            | Slice 2    | planned     |
+| 10  | Experience section                      | Slice 2    | planned     |
+| 11  | Contact section                         | Slice 2    | planned     |
+| 12  | Contribution heatmap                    | Slice 3    | planned     |
+| 13  | Activity feed                           | Slice 3    | planned     |
+| 14  | SEO and share metadata                  | Slice 4    | planned     |
 
 ## Foundations
 
@@ -112,17 +113,23 @@ The frame every page sits in: header, mobile menu, footer and the section rhythm
   - [x] Mobile disclosure, language switch and footer: `components/layout/` and `components/language-switch.tsx`, satisfies AC-4, AC-6, AC-7
   - [x] Temporary anchors and the localized 404: the home placeholders and `app/[locale]/not-found.tsx`, satisfies AC-2, AC-3, AC-9
   - [x] Lint, build and hands on checks at three widths and both locales, satisfies AC-1 to AC-11
-- [ ] Verify it: `/check verify site shell and navigation`
+- [x] Verify it: `/check verify site shell and navigation`
 
 Code in `lib/navigation.ts`, `components/layout/`, `components/language-switch.tsx`, `app/[locale]/` and `content/messages.ts`.
 Spec [0004](../specs/0004-site-shell-and-navigation.md)
 
-### 6. Hero section · planned
+### 6. Hero section · in-progress
 
 The first screen: name, role, headline, intro, availability dot and primary action, all from your content.
 **Done when:** every hero element renders from the content source in both languages, the availability dot animates and respects reduced motion preferences, and the copy contains no invented detail.
 
-- [ ] Build it: `/develop hero section`
+- [x] Build it: `/develop hero section`
+  - [x] Hero component and the action copy: `components/layout/hero.tsx`, `content/messages.ts`, satisfies all three Done when lines
+  - [x] Home page binds the real hero and drops the temporary block: `app/[locale]/page.tsx`
+  - [x] Lint, build and both locales render, satisfies the copy and locale lines
+
+Code in `components/layout/hero.tsx`, `content/messages.ts`, `lib/content/types.ts` and `app/[locale]/page.tsx`.
+Spec [0005](../specs/0005-hero-section/index.md) (assumed, owes ratification)
 
 ### 7. Project index · planned
 

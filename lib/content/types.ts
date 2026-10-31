@@ -140,6 +140,7 @@ export type Messages = {
   "nav.contact": string
   "nav.openMenu": string
   "nav.closeMenu": string
+  "hero.action": string
   "skip.label": string
   "footer.navLabel": string
   "footer.socialLabel": string

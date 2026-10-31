@@ -4,6 +4,7 @@ const STEPS = [
   { token: "md", value: 16, use: "Card padding on mobile, grid gap" },
   { token: "lg", value: 24, use: "Card padding, block gaps" },
   { token: "xl", value: 40, use: "Section padding" },
+  { token: "2xl", value: 64, use: "Hero breathing room" },
 ]
 
 export function SpacingScale() {
