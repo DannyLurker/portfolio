@@ -1,5 +1,5 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 function CodePanel({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -7,11 +7,11 @@ function CodePanel({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="code-panel"
       className={cn(
         "overflow-hidden rounded-lg border border-border-strong bg-popover",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { CodePanel }
+export { CodePanel };

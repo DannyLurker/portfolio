@@ -143,7 +143,6 @@ export type Messages = {
   "skip.label": string
   "footer.navLabel": string
   "footer.socialLabel": string
-  "footer.builtWith": string
   "notFound.title": string
   "notFound.description": string
   "notFound.home": string

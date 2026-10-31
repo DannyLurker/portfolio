@@ -1,18 +1,19 @@
-import Link from "next/link"
-import { LanguageSwitch } from "@/components/language-switch"
-import { Container } from "@/components/layout/container"
-import { SiteNav } from "@/components/layout/site-nav"
-import type { Messages } from "@/lib/content/types"
-import type { Locale } from "@/lib/i18n/locales"
+import Link from "next/link";
+import { LanguageSwitch } from "@/components/language-switch";
+import { Container } from "@/components/layout/container";
+import { SiteNav } from "@/components/layout/site-nav";
+import type { Messages } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/locales";
+import { ActiveSectionProvider } from "@/components/layout/active-section";
 
 function SiteHeader({
   locale,
   displayName,
   messages,
 }: {
-  locale: Locale
-  displayName: string
-  messages: Messages
+  locale: Locale;
+  displayName: string;
+  messages: Messages;
 }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
@@ -25,12 +26,14 @@ function SiteHeader({
         </Link>
 
         <div className="flex items-center gap-sm">
-          <SiteNav locale={locale} messages={messages} />
-          <LanguageSwitch currentLocale={locale} messages={messages} />
+          <ActiveSectionProvider>
+            <SiteNav locale={locale} messages={messages} />
+            <LanguageSwitch currentLocale={locale} messages={messages} />
+          </ActiveSectionProvider>
         </div>
       </Container>
     </header>
-  )
+  );
 }
 
-export { SiteHeader }
+export { SiteHeader };

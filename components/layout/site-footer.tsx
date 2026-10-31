@@ -1,13 +1,13 @@
-import Link from "next/link"
-import { Container } from "@/components/layout/container"
-import { SocialLinks } from "@/components/layout/social-links"
-import type { Messages, Profile, SocialLink } from "@/lib/content/types"
-import type { Locale } from "@/lib/i18n/locales"
-import { sectionHref, siteSections } from "@/lib/navigation"
+import Link from "next/link";
+import { Container } from "@/components/layout/container";
+import { SocialLinks } from "@/components/layout/social-links";
+import type { Messages, Profile, SocialLink } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/locales";
+import { sectionHref, siteSections } from "@/lib/navigation";
 
 // The build year. A prerendered page cannot read the current time, and a static
 // site has no visit time to read anyway.
-const COPYRIGHT_YEAR = new Date().getFullYear()
+const COPYRIGHT_YEAR = new Date().getFullYear();
 
 function SiteFooter({
   locale,
@@ -15,12 +15,12 @@ function SiteFooter({
   links,
   messages,
 }: {
-  locale: Locale
-  profile: Profile
-  links: SocialLink[]
-  messages: Messages
+  locale: Locale;
+  profile: Profile;
+  links: SocialLink[];
+  messages: Messages;
 }) {
-  const copyright = `© ${COPYRIGHT_YEAR} ${profile.name}. ${messages["footer.builtWith"]}`
+  const copyright = `© ${COPYRIGHT_YEAR} ${profile.name}.`;
 
   return (
     <footer className="border-t border-border">
@@ -50,15 +50,12 @@ function SiteFooter({
         </div>
 
         <div className="mt-lg flex flex-col gap-md border-t border-border pt-lg md:flex-row md:items-center md:justify-between">
-          <SocialLinks
-            links={links}
-            label={messages["footer.socialLabel"]}
-          />
+          <SocialLinks links={links} label={messages["footer.socialLabel"]} />
           <p className="type-mono-code text-muted-foreground">{copyright}</p>
         </div>
       </Container>
     </footer>
-  )
+  );
 }
 
-export { SiteFooter }
+export { SiteFooter };

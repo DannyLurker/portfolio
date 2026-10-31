@@ -1,118 +1,117 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Container } from "@/components/layout/container"
-import type { Messages } from "@/lib/content/types"
-import type { Locale } from "@/lib/i18n/locales"
-import { sectionHref, siteSections, type SiteSectionId } from "@/lib/navigation"
-import { cn } from "@/lib/utils"
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/layout/container";
+import type { Messages } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/locales";
+import {
+  sectionHref,
+  siteSections,
+  type SiteSectionId,
+} from "@/lib/navigation";
+import { cn } from "@/lib/utils";
+import { useActiveSection } from "./active-section";
 
-const HEADER_OFFSET = 80
-const MENU_ID = "site-menu"
+const HEADER_OFFSET = 80;
+const MENU_ID = "site-menu";
 
-function SiteNav({
-  locale,
-  messages,
-}: {
-  locale: Locale
-  messages: Messages
-}) {
-  const pathname = usePathname()
-  const reduceMotion = useReducedMotion()
+function SiteNav({ locale, messages }: { locale: Locale; messages: Messages }) {
+  const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   // The path the panel was opened on. A navigation changes the pathname, which
   // closes the panel without an effect or a cascading render.
-  const [openPath, setOpenPath] = useState<string | null>(null)
-  const open = openPath !== null && openPath === pathname
-  const [activeId, setActiveId] = useState<SiteSectionId | null>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const menuRef = useRef<HTMLDivElement>(null)
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const open = openPath !== null && openPath === pathname;
+  const { activeId, setActiveId } = useActiveSection();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const elements = siteSections
       .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => element !== null)
+      .filter((element): element is HTMLElement => element !== null);
 
-    let frame = 0
+    let frame = 0;
 
     const update = () => {
-      frame = 0
+      frame = 0;
 
       if (elements.length === 0) {
-        setActiveId(null)
-        return
+        setActiveId(null);
+        return;
       }
 
       const atBottom =
         window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 2
+        document.documentElement.scrollHeight - 2;
 
       if (atBottom) {
-        setActiveId(elements[elements.length - 1].id as SiteSectionId)
-        return
+        setActiveId(elements[elements.length - 1].id as SiteSectionId);
+        return;
       }
 
-      let current: SiteSectionId | null = null
+      let current: SiteSectionId | null = null;
 
       for (const element of elements) {
         if (element.getBoundingClientRect().top <= HEADER_OFFSET) {
-          current = element.id as SiteSectionId
+          current = element.id as SiteSectionId;
         }
       }
 
-      setActiveId(current)
-    }
+      setActiveId(current);
+    };
 
     const schedule = () => {
-      if (frame === 0) frame = window.requestAnimationFrame(update)
-    }
+      if (frame === 0) frame = window.requestAnimationFrame(update);
+    };
 
-    schedule()
-    window.addEventListener("scroll", schedule, { passive: true })
-    window.addEventListener("resize", schedule)
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", schedule)
-      window.removeEventListener("resize", schedule)
-    }
-  }, [pathname])
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [pathname]);
 
   useEffect(() => {
-    if (!open) return
+    if (!open) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return
-      setOpenPath(null)
-      triggerRef.current?.focus()
-    }
+      if (event.key !== "Escape") return;
+      setOpenPath(null);
+      triggerRef.current?.focus();
+    };
 
     const onPointerDown = (event: PointerEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) {
-        setOpenPath(null)
+        setOpenPath(null);
       }
-    }
+    };
 
-    const desktop = window.matchMedia("(min-width: 768px)")
+    const desktop = window.matchMedia("(min-width: 768px)");
     const onMediaChange = () => {
-      if (desktop.matches) setOpenPath(null)
-    }
+      if (desktop.matches) setOpenPath(null);
+    };
 
-    onMediaChange()
-    desktop.addEventListener("change", onMediaChange)
-    document.addEventListener("keydown", onKeyDown)
-    document.addEventListener("pointerdown", onPointerDown)
+    onMediaChange();
+    desktop.addEventListener("change", onMediaChange);
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
 
     return () => {
-      desktop.removeEventListener("change", onMediaChange)
-      document.removeEventListener("keydown", onKeyDown)
-      document.removeEventListener("pointerdown", onPointerDown)
-    }
-  }, [open])
+      desktop.removeEventListener("change", onMediaChange);
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [open]);
 
   return (
     <div ref={menuRef} className="flex items-center">
@@ -121,7 +120,7 @@ function SiteNav({
         className="hidden items-center gap-lg md:flex"
       >
         {siteSections.map((section) => {
-          const isActive = activeId === section.id
+          const isActive = activeId === section.id;
 
           return (
             <Link
@@ -132,7 +131,7 @@ function SiteNav({
                 "relative inline-flex h-16 items-center type-body-md transition-colors",
                 isActive
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {messages[section.labelKey]}
@@ -143,7 +142,7 @@ function SiteNav({
                 />
               ) : null}
             </Link>
-          )
+          );
         })}
       </nav>
 
@@ -178,7 +177,7 @@ function SiteNav({
             <Container className="py-md">
               <nav aria-label={messages["nav.label"]} className="flex flex-col">
                 {siteSections.map((section) => {
-                  const isActive = activeId === section.id
+                  const isActive = activeId === section.id;
 
                   return (
                     <Link
@@ -190,20 +189,20 @@ function SiteNav({
                         "inline-flex min-h-11 items-center border-b border-border py-sm type-body-lg transition-colors last:border-b-0",
                         isActive
                           ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
                       )}
                     >
                       <span
                         className={cn(
                           "relative",
                           isActive &&
-                            "after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:bg-electric"
+                            "after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:bg-electric",
                         )}
                       >
                         {messages[section.labelKey]}
                       </span>
                     </Link>
-                  )
+                  );
                 })}
               </nav>
             </Container>
@@ -211,7 +210,7 @@ function SiteNav({
         ) : null}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
-export { SiteNav }
+export { SiteNav };

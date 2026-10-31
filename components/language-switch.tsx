@@ -7,7 +7,7 @@ import { locales, localeNames, type Locale } from "@/lib/i18n/locales";
 import { swapLocalePath } from "@/lib/i18n/path";
 import type { Messages } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
-
+import { useActiveSection } from "./layout/active-section";
 interface LanguageSwitchProps {
   currentLocale: Locale;
   messages: Messages;
@@ -20,6 +20,8 @@ export function LanguageSwitch({
   className,
 }: LanguageSwitchProps) {
   const pathname = usePathname() || `/${currentLocale}`;
+  const { activeId } = useActiveSection();
+  const hash = activeId ? `#${activeId}` : "";
 
   return (
     <nav
@@ -31,7 +33,7 @@ export function LanguageSwitch({
     >
       {locales.map((locale) => {
         const isCurrent = locale === currentLocale;
-        const targetPath = swapLocalePath(pathname, locale);
+        const targetPath = swapLocalePath(pathname, locale) + hash;
 
         return (
           <Link

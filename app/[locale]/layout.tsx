@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import { Geist, JetBrains_Mono } from "next/font/google"
-import { MotionProvider } from "@/components/motion-provider"
-import { SkipLink } from "@/components/layout/skip-link"
-import { SiteFooter } from "@/components/layout/site-footer"
-import { SiteHeader } from "@/components/layout/site-header"
+import type { Metadata } from "next";
+import { Geist, JetBrains_Mono } from "next/font/google";
+import { MotionProvider } from "@/components/motion-provider";
+import { SkipLink } from "@/components/layout/skip-link";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
 import {
   assertContentValid,
   getLinks,
@@ -11,33 +11,33 @@ import {
   getProfile,
   locales,
   requireLocale,
-} from "@/lib/content"
-import "@/app/globals.css"
+} from "@/lib/content";
+import "@/app/globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-})
+});
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-})
+});
 
-assertContentValid()
+assertContentValid();
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale: rawLocale } = await params
-  const locale = requireLocale(rawLocale)
-  const profile = getProfile(locale)
+  const { locale: rawLocale } = await params;
+  const locale = requireLocale(rawLocale);
+  const profile = getProfile(locale);
 
   return {
     title: {
@@ -45,22 +45,22 @@ export async function generateMetadata({
       template: `%s | ${profile.name}`,
     },
     description: profile.headline,
-  }
+  };
 }
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale: rawLocale } = await params
-  const locale = requireLocale(rawLocale)
+  const { locale: rawLocale } = await params;
+  const locale = requireLocale(rawLocale);
 
-  const profile = getProfile(locale)
-  const messages = getMessages(locale)
-  const links = getLinks()
+  const profile = getProfile(locale);
+  const messages = getMessages(locale);
+  const links = getLinks();
 
   return (
     <html
@@ -91,5 +91,5 @@ export default async function LocaleLayout({
         </MotionProvider>
       </body>
     </html>
-  )
+  );
 }
