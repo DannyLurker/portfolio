@@ -14,6 +14,7 @@ export type Profile = {
   role: string
   location: string
   timezone: string
+  timezoneId: string
   headline: string
   intro: string
   currentlyLooking: string
@@ -85,6 +86,7 @@ export type ProfileContent = {
   role: LocalizedString
   location: LocalizedString
   timezone: string
+  timezoneId: string
   headline: LocalizedString
   intro: LocalizedString
   currentlyLooking: LocalizedString
@@ -142,6 +144,7 @@ export type SiteContent = {
   profile: ProfileContent
   experience: ExperienceRoleContent[]
   projects: ProjectContent[]
+  activityRepositories: string[]
   skills: Skills
   metrics: MetricContent[]
   links: SocialLink[]
@@ -179,6 +182,16 @@ export type Messages = {
   "experience.current": string
   "experience.present": string
   "experience.rangeTo": string
+  "heatmap.heading": string
+  "heatmap.total": string
+  "heatmap.dayCount": string
+  "heatmap.empty": string
+  "heatmap.profileLink": string
+  "heatmap.summary": string
+  "heatmap.graphLabel": string
+  "activity.heading": string
+  "activity.repositoryLink": string
+  "activity.commitLink": string
   "contact.heading": string
   "contact.name": string
   "contact.email": string

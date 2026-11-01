@@ -12,6 +12,7 @@ Pronouns: He/Him
 Role or title: Software Engineering Student & Intern
 Location: Indonesia, Kepulauan Riau, Batam Island
 Timezone: GMT +7 (Jakarta)
+Timezone ID: Asia/Jakarta
 
 ## Story
 

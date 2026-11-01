@@ -12,6 +12,7 @@ import type {
 } from "./types"
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const REPOSITORY_PATTERN = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/
 const MONTH_PATTERN = /^\d{4}-(?:0[1-9]|1[0-2])$/
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PLACEHOLDER_TOKENS = [
@@ -116,6 +117,34 @@ function checkStringArray(
 
   values.forEach((value, index) => {
     checkString(errors, `${path}[${index}]`, value)
+  })
+}
+
+function checkActivityRepositories(errors: string[], repositories: unknown) {
+  checkStringArray(errors, "activityRepositories", repositories, 1)
+
+  if (!Array.isArray(repositories)) return
+
+  const seen = new Set<string>()
+
+  repositories.forEach((repository, index) => {
+    if (!isNonEmptyString(repository)) return
+
+    const value = repository.trim()
+    if (!REPOSITORY_PATTERN.test(value)) {
+      errors.push(
+        `activityRepositories[${index}] must use the owner/repository shape`
+      )
+      return
+    }
+
+    const key = value.toLowerCase()
+    if (seen.has(key)) {
+      errors.push(`activityRepositories contains duplicate "${value}"`)
+      return
+    }
+
+    seen.add(key)
   })
 }
 
@@ -244,6 +273,19 @@ function checkContent(content: SiteContent): string[] {
   checkLocalizedString(errors, "profile.role", content.profile.role)
   checkLocalizedString(errors, "profile.location", content.profile.location)
   checkString(errors, "profile.timezone", content.profile.timezone)
+  checkString(errors, "profile.timezoneId", content.profile.timezoneId)
+
+  if (isNonEmptyString(content.profile.timezoneId)) {
+    try {
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: content.profile.timezoneId,
+      })
+    } catch {
+      errors.push(
+        "profile.timezoneId must be a valid IANA timezone, such as Asia/Jakarta"
+      )
+    }
+  }
   checkLocalizedString(errors, "profile.headline", content.profile.headline)
   checkLocalizedString(errors, "profile.intro", content.profile.intro)
   checkLocalizedString(
@@ -328,6 +370,8 @@ function checkContent(content: SiteContent): string[] {
   content.projects.forEach((project, index) => {
     checkProject(errors, project, index, slugs)
   })
+
+  checkActivityRepositories(errors, content.activityRepositories)
 
   if (content.skills.top.length !== 3) {
     errors.push("skills.top must have exactly three entries")

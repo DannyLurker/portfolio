@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment
+
+The contribution heatmap reads your GitHub contribution calendar at build time.
+
+1. Create a classic GitHub personal access token with `read:user`.
+2. Copy `.env.example` to `.env.local` and paste the token as `GITHUB_TOKEN`.
+3. Set the same variable in the host environment (Vercel, or the VPS build) before deploying.
+
+The token is read on the server only. When it is missing or the read fails, the build still succeeds and the section is left out of the page.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

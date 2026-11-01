@@ -21,23 +21,23 @@ The short human pass for each shipped feature, kept here so long checklists stay
 
 ## At a glance
 
-| #   | Feature                                 | Phase      | Status      |
-| --- | --------------------------------------- | ---------- | ----------- |
-| A   | Next.js scaffold                        | Foundation | existing    |
-| 1   | Coding standards and tooling            | Foundation | done        |
-| 2   | Design system and UI foundation         | Foundation | done        |
-| 3   | Content model and data layer            | Foundation | done        |
-| 4   | Internationalization and locale routing | Foundation | done        |
-| 5   | Site shell and navigation               | Slice 1    | done        |
-| 6   | Hero section                            | Slice 1    | done        |
-| 8   | Project detail page                     | Slice 1    | done        |
-| 7   | Project index                           | Slice 1    | in-progress |
-| 9   | Metric cards                            | Slice 2    | in-progress |
-| 10  | Experience section                      | Slice 2    | in-progress |
-| 11  | Contact section                         | Slice 2    | in-progress |
-| 12  | Contribution heatmap                    | Slice 3    | planned     |
-| 13  | Activity feed                           | Slice 3    | planned     |
-| 14  | SEO and share metadata                  | Slice 4    | planned     |
+| #   | Feature                                 | Phase      | Status   |
+| --- | --------------------------------------- | ---------- | -------- |
+| A   | Next.js scaffold                        | Foundation | existing |
+| 1   | Coding standards and tooling            | Foundation | done     |
+| 2   | Design system and UI foundation         | Foundation | done     |
+| 3   | Content model and data layer            | Foundation | done     |
+| 4   | Internationalization and locale routing | Foundation | done     |
+| 5   | Site shell and navigation               | Slice 1    | done     |
+| 6   | Hero section                            | Slice 1    | done     |
+| 8   | Project detail page                     | Slice 1    | done     |
+| 7   | Project index                           | Slice 1    | done     |
+| 9   | Metric cards                            | Slice 2    | done     |
+| 10  | Experience section                      | Slice 2    | done     |
+| 11  | Contact section                         | Slice 2    | done     |
+| 12  | Contribution heatmap                    | Slice 3    | done     |
+| 13  | Activity feed                           | Slice 3    | done     |
+| 14  | SEO and share metadata                  | Slice 4    | planned  |
 
 ## Foundations
 
@@ -146,7 +146,7 @@ One page per project, a short case study: the problem, your approach, what you b
 
 Spec [0006](../specs/0006-project-detail-page/index.md)
 
-### 7. Project index · in-progress
+### 7. Project index · done
 
 The numbered project list from the design, the main way a visitor reaches your work. It lands after the detail page so every row points at a real destination.
 **Done when:** projects show in the design's index style with order number, title, stack badges and an external link, each row opens its project page, hover and focus states match the design, and an empty state exists.
@@ -158,7 +158,7 @@ Code in `components/layout/project-index.tsx`, `app/[locale]/page.tsx` and `cont
 
 ## Slice 2: Depth
 
-### 9. Metric cards · in-progress
+### 9. Metric cards · done
 
 The measurable proof row from the design: the numbers you want a recruiter to see first.
 **Done when:** your real labels and values render from the content source, the mono stat treatment matches the design, and the row reflows to one or two columns on mobile without clipping.
@@ -168,7 +168,7 @@ The measurable proof row from the design: the numbers you want a recruiter to se
 
 Code in `components/layout/metric-cards.tsx`, `components/metric-card.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`.
 
-### 10. Experience section · in-progress
+### 10. Experience section · done
 
 Your roles in the design's card and spine language, the proof that the projects came from real jobs. It is not in the Figma, so it reuses the existing card and section rhythm rather than inventing a new visual idea.
 **Done when:** roles render from the content source in both languages with company, title, dates and one line each, the current role is marked, and the section sits above contact without breaking the section rhythm.
@@ -178,7 +178,7 @@ Your roles in the design's card and spine language, the proof that the projects 
 
 Code in `components/layout/experience-section.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`.
 
-### 11. Contact section · in-progress
+### 11. Contact section · done
 
 The closing section: the form styled as in the design that opens a prefilled mail draft, plus copy email and social links. No backend.
 **Done when:** submitting opens a prefilled mail draft to your address, the address can be copied with visible feedback, social links are labelled for screen readers, and the whole section is keyboard usable.
@@ -195,19 +195,36 @@ Spec [0008](../specs/0008-contact-section/index.md) · code in `components/layou
 
 ## Slice 3: Live proof
 
-### 12. Contribution heatmap · needs a decision
+### 12. Contribution heatmap · done
 
 A real 52 week contribution grid pulled from GitHub when the site builds, the most convincing signal in the design. Reading GitHub at build time, caching it and keeping the page usable without it are the decisions.
 **Done when:** the grid shows your real counts in the design's ramp, a hover or focus tooltip gives date and count, a text summary serves screen readers, and the build still succeeds when GitHub is unreachable.
 
-- [ ] Design it (spec): `/architect contribution heatmap`
+- [x] Design it (spec): `/architect contribution heatmap`
+- [x] Build it: `/develop contribution heatmap`
+  - [x] Timezone field, token config and the first end to end grid (AC-2, AC-7, AC-8)
+  - [x] Week shaping, heat levels and the localized section (AC-1, AC-2, AC-3, AC-11)
+  - [x] Keyboard, tooltip and small screen behavior (AC-4, AC-5, AC-6)
+  - [x] Empty year and the failure paths, proven with real builds (AC-7, AC-9)
+  - [x] Token boundary, lint and build gate (AC-10, AC-11)
+- [x] Verify it: `/check verify contribution heatmap`
 
-### 13. Activity feed · needs a decision
+Spec [0009](../specs/0009-contribution-heatmap/index.md) · code in `lib/github/`, `components/contribution-grid.tsx`, `components/layout/contribution-heatmap.tsx` and `app/[locale]/page.tsx`
+
+### 13. Activity feed · done
 
 Recent public commits on the vertical spine from the design, showing the work is current. It reuses the GitHub data source chosen for the heatmap but needs its own rules for what is public.
 **Done when:** the feed lists recent public commits with repo, short hash and relative time from build data, hidden repos never appear, and the section is omitted cleanly when there is nothing to show.
 
-- [ ] Design it (spec): `/architect activity feed`
+- [x] Design it (spec): `/architect activity feed`
+- [x] Build it: `/develop activity feed`
+  - [x] Add the repository allowlist, feed types and validation, and check Octokit compatibility, satisfies AC-2, AC-3, AC-8
+  - [x] Read and filter public push events, verify repository visibility, resolve commits, and add caching and failure handling, satisfies AC-2, AC-3, AC-4, AC-5, AC-6
+  - [x] Render the localized activity section with accessible links and the commit spine, satisfies AC-1, AC-6, AC-7
+  - [x] Check privacy and failure paths, token secrecy, lint and production build, satisfies AC-3, AC-4, AC-5, AC-8
+- [x] Verify it: `/check verify activity feed`
+
+Spec [0010](../specs/0010-activity-feed/index.md) · code in `content/site.ts`, `lib/content/`, `lib/github/activity.ts`, `components/layout/activity-feed.tsx`, `app/[locale]/page.tsx` and `content/messages.ts`
 
 ## Slice 4: Discovery
 
@@ -235,7 +252,7 @@ Out of scope for this pass, kept so the plan stays honest.
 
 **The decision box.** Every feature carries exactly one, the sub-task whose label ends with `(spec)`. Every other box is an execution box.
 
-**Status**: `planned`, then `in-progress`, then `done`. `existing` means it predates this workflow, `dropped` means de-scoped. `needs a decision` beside a heading means run `/architect` first, otherwise go straight to `/develop`.
+**Status**: `planned`, then `done`, then `done`. `existing` means it predates this workflow, `dropped` means de-scoped. `needs a decision` beside a heading means run `/architect` first, otherwise go straight to `/develop`.
 
 **Next step** is always the first unticked box.
 

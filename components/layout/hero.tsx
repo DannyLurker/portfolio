@@ -1,13 +1,13 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-import { Container } from "@/components/layout/container"
-import { Section } from "@/components/layout/section"
-import { StatusPill } from "@/components/status-pill"
-import { buttonVariants } from "@/components/ui/button"
-import type { Messages, Profile } from "@/lib/content/types"
-import type { Locale } from "@/lib/i18n/locales"
-import { sectionHref } from "@/lib/navigation"
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
+import { StatusPill } from "@/components/status-pill";
+import { buttonVariants } from "@/components/ui/button";
+import type { Messages, Profile } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/locales";
+import { sectionHref } from "@/lib/navigation";
 
 /**
  * The first screen. Every value comes from getProfile(locale); the only copy
@@ -18,9 +18,9 @@ function Hero({
   profile,
   messages,
 }: {
-  locale: Locale
-  profile: Profile
-  messages: Messages
+  locale: Locale;
+  profile: Profile;
+  messages: Messages;
 }) {
   return (
     <Section
@@ -30,7 +30,7 @@ function Hero({
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-0 hidden size-[600px] rounded-full bg-primary/[0.08] blur-3xl lg:block"
+        className="pointer-events-none absolute -top-40 right-0 hidden size-150 rounded-full bg-primary/8 blur-3xl lg:block"
       />
       <Container className="relative">
         <div className="flex flex-wrap items-center gap-sm">
@@ -52,7 +52,7 @@ function Hero({
         <p className="mt-md max-w-3xl type-headline-lg text-foreground">
           {profile.headline}
         </p>
-        <p className="mt-md max-w-2xl type-body-lg text-muted-foreground">
+        <p className="mt-md max-w-168 type-body-lg text-muted-foreground">
           {profile.intro}
         </p>
 
@@ -67,7 +67,7 @@ function Hero({
         </div>
       </Container>
     </Section>
-  )
+  );
 }
 
-export { Hero }
+export { Hero };

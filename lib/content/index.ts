@@ -32,6 +32,7 @@ export function getProfile(locale: Locale): Profile {
     role: resolveString(profile.role, locale),
     location: resolveString(profile.location, locale),
     timezone: profile.timezone,
+    timezoneId: profile.timezoneId,
     headline: resolveString(profile.headline, locale),
     intro: resolveString(profile.intro, locale),
     currentlyLooking: resolveString(profile.currentlyLooking, locale),

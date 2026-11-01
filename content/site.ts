@@ -18,6 +18,7 @@ export const siteContent: SiteContent = {
       id: "Indonesia, Kepulauan Riau, Pulau Batam",
     },
     timezone: "GMT +7 (Jakarta)",
+    timezoneId: "Asia/Jakarta",
     headline: {
       en: "Building robust full-stack web applications and software systems with modern web technologies.",
       id: "Membangun aplikasi web full-stack dan sistem perangkat lunak yang tangguh dengan teknologi web modern.",
@@ -120,6 +121,7 @@ export const siteContent: SiteContent = {
       },
     },
   ],
+  activityRepositories: ["DannyLurker/internal-management-system"],
   skills: {
     top: ["TypeScript", "Next.js", "PostgreSQL"],
     all: [
