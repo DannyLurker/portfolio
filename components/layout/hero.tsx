@@ -26,7 +26,7 @@ function Hero({
     <Section
       bordered={false}
       aria-labelledby="hero-title"
-      className="relative overflow-hidden md:py-2xl"
+      className="relative flex min-h-[calc(100svh-5rem)] flex-col justify-center overflow-hidden"
     >
       <div
         aria-hidden="true"
@@ -43,15 +43,18 @@ function Hero({
         </div>
 
         <p className="mt-xl type-mono-badge text-electric">{profile.role}</p>
+
         <h1
           id="hero-title"
           className="mt-sm max-w-4xl type-display-hero text-foreground"
         >
           {profile.name}
         </h1>
+
         <p className="mt-md max-w-3xl type-headline-lg text-foreground">
           {profile.headline}
         </p>
+
         <p className="mt-md max-w-168 type-body-lg text-muted-foreground">
           {profile.intro}
         </p>
