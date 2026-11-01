@@ -161,6 +161,7 @@ export type Messages = {
   "nav.closeMenu": string
   "hero.action": string
   "skip.label": string
+  "intro.skip": string
   "footer.navLabel": string
   "footer.socialLabel": string
   "notFound.title": string

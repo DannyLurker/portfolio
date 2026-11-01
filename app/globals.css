@@ -143,6 +143,61 @@
 }
 
 @layer components {
+  .site-atmosphere {
+    pointer-events: none;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 56%),
+      var(--background);
+  }
+
+  .site-atmosphere-stars {
+    opacity: 0.2;
+    background-image:
+      radial-gradient(circle, color-mix(in srgb, var(--electric) 52%, transparent) 0 1px, transparent 1.5px),
+      radial-gradient(circle, color-mix(in srgb, var(--foreground) 30%, transparent) 0 1px, transparent 1.5px);
+    background-position: 0 0, 37px 61px;
+    background-size: 123px 137px, 191px 173px;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+  }
+
+  .site-meteor {
+    width: 112px;
+    height: 1px;
+    rotate: 42deg;
+    transform-origin: left center;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--electric) 72%, transparent) 70%,
+      var(--foreground)
+    );
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--electric) 60%, transparent));
+  }
+
+  .site-intro-name {
+    animation: site-intro-name-reveal 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    text-shadow: 0 0 34px color-mix(in srgb, var(--electric) 48%, transparent);
+  }
+
+  @keyframes site-intro-name-reveal {
+    from {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(18px);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+
+  html[data-site-intro-seen="true"] #site-intro {
+    display: none;
+  }
+
   .type-display-hero {
     font-size: 2.25rem;
     line-height: 2.75rem;
@@ -231,5 +286,15 @@
     line-height: 2rem;
     letter-spacing: -0.03em;
     font-weight: 600;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #site-intro {
+    display: none !important;
+  }
+
+  .site-meteor {
+    display: none;
   }
 }

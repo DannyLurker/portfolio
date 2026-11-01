@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
 import { SkipLink } from "@/components/layout/skip-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { SiteAtmosphere } from "@/components/site-atmosphere";
 import {
   assertContentValid,
   getLinks,
@@ -68,27 +70,42 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <noscript>
+          <style>{"#site-intro { display: none !important; }"}</style>
+        </noscript>
         <MotionProvider>
-          <SkipLink label={messages["skip.label"]} />
-          <SiteHeader
-            locale={locale}
-            displayName={profile.displayName}
-            messages={messages}
-          />
-          <main
-            id="main"
-            tabIndex={-1}
-            className="flex flex-1 flex-col outline-none"
-          >
-            {children}
-          </main>
-          <SiteFooter
-            locale={locale}
-            profile={profile}
-            links={links}
-            messages={messages}
-          />
+          <SiteAtmosphere name={profile.name} skipLabel={messages["intro.skip"]} />
+          <div className="relative z-10 flex flex-1 flex-col">
+            <SkipLink label={messages["skip.label"]} />
+            <SiteHeader
+              locale={locale}
+              displayName={profile.displayName}
+              messages={messages}
+            />
+            <main
+              id="main"
+              tabIndex={-1}
+              className="flex flex-1 flex-col"
+            >
+              {children}
+            </main>
+            <SiteFooter
+              locale={locale}
+              profile={profile}
+              links={links}
+              messages={messages}
+            />
+          </div>
         </MotionProvider>
+        <Script id="site-intro-session" strategy="beforeInteractive">
+          {`try {
+  if (window.sessionStorage.getItem("portfolio:site-intro:v1")) {
+    document.documentElement.dataset.siteIntroSeen = "true";
+  }
+} catch {
+  document.documentElement.dataset.siteIntroSeen = "true";
+}`}
+        </Script>
       </body>
     </html>
   );
