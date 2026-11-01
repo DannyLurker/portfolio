@@ -94,6 +94,33 @@ function checkUrl(errors: string[], path: string, value: unknown) {
   }
 }
 
+function checkSiteUrl(errors: string[], value: unknown) {
+  const path = "siteUrl"
+
+  if (!isNonEmptyString(value)) {
+    errors.push(`${path} must be an absolute HTTPS origin`)
+    return
+  }
+
+  let parsed: URL
+
+  try {
+    parsed = new URL(value)
+  } catch {
+    errors.push(`${path} must be an absolute HTTPS origin`)
+    return
+  }
+
+  if (
+    parsed.protocol !== "https:" ||
+    parsed.origin !== value ||
+    parsed.username.length > 0 ||
+    parsed.password.length > 0
+  ) {
+    errors.push(`${path} must be an HTTPS origin with no path, query, or fragment`)
+  }
+}
+
 function checkMonth(errors: string[], path: string, value: unknown) {
   if (!isNonEmptyString(value) || !MONTH_PATTERN.test(value)) {
     errors.push(`${path} must use the YYYY-MM shape`)
@@ -267,6 +294,7 @@ function checkMessages(errors: string[]) {
 function checkContent(content: SiteContent): string[] {
   const errors: string[] = []
 
+  checkSiteUrl(errors, content.siteUrl)
   checkString(errors, "profile.name", content.profile.name)
   checkString(errors, "profile.displayName", content.profile.displayName)
   checkLocalizedString(errors, "profile.pronouns", content.profile.pronouns)

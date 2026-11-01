@@ -17,6 +17,13 @@ import {
 import { sectionHref } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
+import { getProfile } from "@/lib/content";
+import {
+  getLanguageAlternates,
+  getPageUrl,
+  openGraphLocales,
+  socialImageSize,
+} from "@/lib/seo";
 
 type ProjectPageParams = Promise<{ locale: string; slug: string }>;
 
@@ -32,16 +39,41 @@ export async function generateMetadata({
   const { locale: rawLocale, slug } = await params;
   const locale = requireLocale(rawLocale);
   const project = getProjectBySlug(locale, slug);
+  const profile = getProfile(locale);
 
   if (!project) return {};
+
+  const pageUrl = getPageUrl(locale, `projects/${slug}`);
+  const imageUrl = getPageUrl(locale, `projects/${slug}/opengraph-image`);
 
   return {
     title: project.name,
     description: project.summary,
+    alternates: {
+      canonical: pageUrl,
+      languages: getLanguageAlternates(`projects/${slug}`),
+    },
     openGraph: {
       title: project.name,
       description: project.summary,
       type: "article",
+      url: pageUrl,
+      siteName: profile.name,
+      locale: openGraphLocales[locale],
+      images: [
+        {
+          url: imageUrl,
+          width: socialImageSize.width,
+          height: socialImageSize.height,
+          alt: project.cover.alt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.name,
+      description: project.summary,
+      images: [imageUrl],
     },
   };
 }

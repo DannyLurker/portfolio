@@ -141,6 +141,7 @@ export type MetricContent = {
 }
 
 export type SiteContent = {
+  siteUrl: string
   profile: ProfileContent
   experience: ExperienceRoleContent[]
   projects: ProjectContent[]

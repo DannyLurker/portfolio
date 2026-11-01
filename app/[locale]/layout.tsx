@@ -7,6 +7,13 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteAtmosphere } from "@/components/site-atmosphere";
 import {
+  getLanguageAlternates,
+  getPageUrl,
+  getSiteOrigin,
+  openGraphLocales,
+  socialImageSize,
+} from "@/lib/seo";
+import {
   assertContentValid,
   getLinks,
   getMessages,
@@ -42,11 +49,38 @@ export async function generateMetadata({
   const profile = getProfile(locale);
 
   return {
+    metadataBase: getSiteOrigin(),
     title: {
       default: `${profile.name} | ${profile.role}`,
       template: `%s | ${profile.name}`,
     },
     description: profile.headline,
+    alternates: {
+      canonical: getPageUrl(locale),
+      languages: getLanguageAlternates(),
+    },
+    openGraph: {
+      type: "website",
+      title: `${profile.name} | ${profile.role}`,
+      description: profile.headline,
+      url: getPageUrl(locale),
+      siteName: profile.name,
+      locale: openGraphLocales[locale],
+      images: [
+        {
+          url: getPageUrl(locale, "opengraph-image"),
+          width: socialImageSize.width,
+          height: socialImageSize.height,
+          alt: `${profile.name} | ${profile.role}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${profile.name} | ${profile.role}`,
+      description: profile.headline,
+      images: [getPageUrl(locale, "opengraph-image")],
+    },
   };
 }
 

@@ -1,9 +1,9 @@
 import {
   getMessages,
+  getLinks,
   getExperience,
   getMetrics,
   getProfile,
-  getLinks,
   getProjects,
   requireLocale,
 } from "@/lib/content"
@@ -16,6 +16,7 @@ import { ContactSection } from "@/components/layout/contact-section"
 import { ContributionHeatmap } from "@/components/layout/contribution-heatmap"
 import { ActivityFeed } from "@/components/layout/activity-feed"
 import { siteSections } from "@/lib/navigation"
+import { getPageUrl } from "@/lib/seo"
 
 export default async function HomePage({
   params,
@@ -31,9 +32,26 @@ export default async function HomePage({
   const metrics = getMetrics(locale)
   const projects = getProjects(locale)
   const links = getLinks()
+  const personStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    jobTitle: profile.role,
+    description: profile.headline,
+    url: getPageUrl(locale),
+    sameAs: links.map((link) => link.href),
+  }
+  const serializedPersonStructuredData = JSON.stringify(personStructuredData).replace(
+    /</g,
+    "\\u003c",
+  )
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializedPersonStructuredData }}
+      />
       <Hero locale={locale} profile={profile} messages={messages} />
       <MetricCards metrics={metrics} messages={messages} />
 

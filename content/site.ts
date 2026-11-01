@@ -2,6 +2,7 @@ import type { SiteContent } from "@/lib/content/types"
 
 // Seeded from docs/profile.md. This file is the runtime source of truth.
 export const siteContent: SiteContent = {
+  siteUrl: "https://danny-dev.my.id",
   profile: {
     name: "Danny Ng",
     displayName: "Danny",

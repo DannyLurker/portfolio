@@ -37,7 +37,7 @@ The short human pass for each shipped feature, kept here so long checklists stay
 | 11  | Contact section                         | Slice 2    | done     |
 | 12  | Contribution heatmap                    | Slice 3    | done     |
 | 13  | Activity feed                           | Slice 3    | done     |
-| 14  | SEO and share metadata                  | Slice 4    | planned  |
+| 14  | SEO and share metadata                  | Slice 4    | done     |
 
 ## Foundations
 
@@ -228,12 +228,19 @@ Spec [0010](../specs/0010-activity-feed/index.md) · code in `content/site.ts`, 
 
 ## Slice 4: Discovery
 
-### 14. SEO and share metadata · needs a decision
+### 14. SEO and share metadata · done
 
 Titles, descriptions, share cards, hreflang, sitemap and robots, for a link that looks right when a recruiter opens it in a chat.
 **Done when:** every page has a title, description, canonical URL and language alternates, the Open Graph and X card image renders for the home and each project, and sitemap and robots are generated at build.
 
-- [ ] Design it (spec): `/architect SEO and share metadata`
+- [x] Design it (spec): `/architect SEO and share metadata`
+- [x] Build it: `/develop SEO and share metadata`
+  - [x] Add the site origin and localized canonical, alternate, and social metadata, covers **AC-1**, **AC-2**, **AC-3**, **AC-7**, **AC-8**
+  - [x] Generate localized share cards and Person structured data, covers **AC-3**, **AC-6**
+  - [x] Generate sitemap and robots output, covers **AC-4**, **AC-5**
+- [x] Verify it: `/check verify SEO and share metadata`
+
+Spec [0012](../specs/0012-seo-share-metadata/index.md) · code in `content/site.ts`, `lib/content/`, `lib/seo.ts`, `lib/seo/social-card.tsx`, `app/[locale]/layout.tsx`, `app/[locale]/page.tsx`, `app/[locale]/projects/[slug]/page.tsx`, `app/[locale]/projects/[slug]/opengraph-image.tsx`, `app/en/`, `app/id/`, `app/sitemap.ts` and `app/robots.ts`
 
 ## Deferred
 
