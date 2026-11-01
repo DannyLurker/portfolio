@@ -102,6 +102,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${geistSans.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <noscript>
