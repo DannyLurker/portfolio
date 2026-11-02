@@ -14,7 +14,6 @@ import { MetricCards } from "@/components/layout/metric-cards"
 import { ProjectIndex } from "@/components/layout/project-index"
 import { ContactSection } from "@/components/layout/contact-section"
 import { ContributionHeatmap } from "@/components/layout/contribution-heatmap"
-import { ActivityFeed } from "@/components/layout/activity-feed"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { siteSections } from "@/lib/navigation"
 import { getPageUrl } from "@/lib/seo"
@@ -75,11 +74,6 @@ export default async function HomePage({
                   profile={profile}
                   messages={messages}
                 />
-              </ScrollReveal>
-            </Suspense>
-            <Suspense fallback={null}>
-              <ScrollReveal>
-                <ActivityFeed locale={locale} messages={messages} />
               </ScrollReveal>
             </Suspense>
           </Fragment>
