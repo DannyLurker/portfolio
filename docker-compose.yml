@@ -2,9 +2,13 @@ services:
   portfolio:
     build:
       context: .
-      args:
-        - GITHUB_TOKEN=${GITHUB_TOKEN} 
+      secrets:
+        - github_token
     env_file:
-      - .env.local                  
+      - .env.local
     ports:
       - "3000:3000"
+
+secrets:
+  github_token:
+    environment: GITHUB_TOKEN
