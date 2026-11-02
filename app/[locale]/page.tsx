@@ -15,6 +15,7 @@ import { ProjectIndex } from "@/components/layout/project-index"
 import { ContactSection } from "@/components/layout/contact-section"
 import { ContributionHeatmap } from "@/components/layout/contribution-heatmap"
 import { ActivityFeed } from "@/components/layout/activity-feed"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { siteSections } from "@/lib/navigation"
 import { getPageUrl } from "@/lib/seo"
 
@@ -53,41 +54,51 @@ export default async function HomePage({
         dangerouslySetInnerHTML={{ __html: serializedPersonStructuredData }}
       />
       <Hero locale={locale} profile={profile} messages={messages} />
-      <MetricCards metrics={metrics} messages={messages} />
+      <ScrollReveal>
+        <MetricCards metrics={metrics} messages={messages} />
+      </ScrollReveal>
 
       {siteSections.map((section) =>
         section.id === "work" ? (
           <Fragment key={section.id}>
-            <ProjectIndex
-              locale={locale}
-              projects={projects}
-              messages={messages}
-            />
-            <Suspense fallback={null}>
-              <ContributionHeatmap
+            <ScrollReveal>
+              <ProjectIndex
                 locale={locale}
-                profile={profile}
+                projects={projects}
                 messages={messages}
               />
+            </ScrollReveal>
+            <Suspense fallback={null}>
+              <ScrollReveal>
+                <ContributionHeatmap
+                  locale={locale}
+                  profile={profile}
+                  messages={messages}
+                />
+              </ScrollReveal>
             </Suspense>
             <Suspense fallback={null}>
-              <ActivityFeed locale={locale} messages={messages} />
+              <ScrollReveal>
+                <ActivityFeed locale={locale} messages={messages} />
+              </ScrollReveal>
             </Suspense>
           </Fragment>
         ) : section.id === "experience" ? (
-          <ExperienceSection
-            key={section.id}
-            locale={locale}
-            roles={experience}
-            messages={messages}
-          />
+          <ScrollReveal key={section.id}>
+            <ExperienceSection
+              locale={locale}
+              roles={experience}
+              messages={messages}
+            />
+          </ScrollReveal>
         ) : (
-          <ContactSection
-            key={section.id}
-            profile={profile}
-            links={links}
-            messages={messages}
-          />
+          <ScrollReveal key={section.id}>
+            <ContactSection
+              profile={profile}
+              links={links}
+              messages={messages}
+            />
+          </ScrollReveal>
         )
       )}
     </>

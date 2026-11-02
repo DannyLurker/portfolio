@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Panel } from "@/components/panel";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import { Tag } from "@/components/tag";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -178,37 +179,38 @@ export default async function ProjectPage({
           </div>
         </header>
 
-        <Panel className="mt-xl overflow-hidden p-xs md:p-sm">
-          <Image
-            src={project.cover.src}
-            alt={project.cover.alt}
-            width={project.cover.width}
-            height={project.cover.height}
-            sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1200px) calc(100vw - 4rem), 1160px"
-            className="h-auto w-full rounded-md"
-          />
-        </Panel>
+        <ScrollReveal className="mt-xl">
+          <Panel className="overflow-hidden p-xs md:p-sm">
+            <Image
+              src={project.cover.src}
+              alt={project.cover.alt}
+              width={project.cover.width}
+              height={project.cover.height}
+              sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1200px) calc(100vw - 4rem), 1160px"
+              className="h-auto w-full rounded-md"
+            />
+          </Panel>
+        </ScrollReveal>
 
         <ol className="mt-2xl divide-y divide-border border-y border-border">
           {caseStudyParts.map((part, index) => (
-            <li
-              key={part.id}
-              className="grid gap-md py-lg md:grid-cols-[minmax(12rem,0.7fr)_minmax(0,1.3fr)] md:gap-xl md:py-xl"
-            >
-              <h2 className="type-headline-md text-foreground">
-                <span className="mr-md type-mono-badge text-muted-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {messages[part.message]}
-              </h2>
-              <p className="max-w-3xl type-body-lg text-muted-foreground">
-                {study[index]}
-              </p>
+            <li key={part.id} className="py-lg md:py-xl">
+              <ScrollReveal className="grid gap-md md:grid-cols-[minmax(12rem,0.7fr)_minmax(0,1.3fr)] md:gap-xl">
+                <h2 className="type-headline-md text-foreground">
+                  <span className="mr-md type-mono-badge text-muted-foreground">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {messages[part.message]}
+                </h2>
+                <p className="max-w-3xl type-body-lg text-muted-foreground">
+                  {study[index]}
+                </p>
+              </ScrollReveal>
             </li>
           ))}
         </ol>
 
-        <div className="mt-xl">
+        <ScrollReveal className="mt-xl">
           <Link
             href={sectionHref(locale, "work")}
             className={cn(
@@ -219,7 +221,7 @@ export default async function ProjectPage({
             <ArrowLeft aria-hidden="true" className="size-4" />
             {messages["project.back"]}
           </Link>
-        </div>
+        </ScrollReveal>
       </Container>
     </Section>
   );

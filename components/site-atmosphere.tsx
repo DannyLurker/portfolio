@@ -7,8 +7,9 @@ import {
   useSyncExternalStore,
   type KeyboardEvent,
 } from "react"
-import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "motion/react"
+import { AnimatePresence, m, useReducedMotion } from "motion/react"
 import { Button } from "@/components/ui/button"
+import { ParticleField } from "@/components/particle-field"
 
 const INTRO_SESSION_KEY = "portfolio:site-intro:v1"
 
@@ -65,12 +66,6 @@ function completeIntroState() {
   notifyIntroState()
 }
 
-const METEORS = [
-  { top: "8%", left: "8%", x: 240, y: 220, duration: 8, delay: 0 },
-  { top: "18%", left: "44%", x: 220, y: 200, duration: 9, delay: 2.7 },
-  { top: "4%", left: "76%", x: 200, y: 180, duration: 8.5, delay: 5.4 },
-]
-
 function SiteAtmosphere({
   name,
   skipLabel,
@@ -125,28 +120,7 @@ function SiteAtmosphere({
   return (
     <>
       <div aria-hidden="true" className="site-atmosphere fixed inset-0 z-0">
-        <div className="site-atmosphere-stars absolute inset-0" />
-        <LazyMotion features={domAnimation} strict>
-          {METEORS.map((meteor, index) => (
-            <m.span
-              key={index}
-              className="site-meteor absolute"
-              style={{ top: meteor.top, left: meteor.left }}
-              initial={{ opacity: 0, x: 0, y: 0 }}
-              animate={{
-                opacity: [0, 0.65, 0],
-                x: [0, meteor.x],
-                y: [0, meteor.y],
-              }}
-              transition={{
-                duration: meteor.duration,
-                delay: meteor.delay,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-          ))}
-        </LazyMotion>
+        <ParticleField />
       </div>
 
       <AnimatePresence>

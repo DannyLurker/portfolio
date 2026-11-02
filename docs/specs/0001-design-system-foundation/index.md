@@ -103,7 +103,7 @@ Focus is always the 2px `--ring` ring with 2px offset on a dark surface, on ever
 - `lucide-react` only. Icons inherit `currentColor`, sit at 16px or 20px, and decorative ones are `aria-hidden`. An icon only button always carries an `aria-label`.
 - `motion` in client components only, imported through `LazyMotion` with `domAnimation`. Used for the mobile menu, tooltips, and the status ping. Duration 120ms to 200ms, ease `[0.2, 0, 0, 1]`.
 - `MotionConfig reducedMotion="user"` plus `prefers-reduced-motion` in CSS. With reduced motion, states change instantly and the ping stops.
-- No page transitions and no scroll reveals.
+- No page transitions. Section content reveals once when it enters the viewport with a short fade and lift. The reveal is applied after hydration, so content stays visible without JavaScript and under reduced motion.
 
 ### Styleguide
 
