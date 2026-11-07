@@ -2,7 +2,7 @@
 
 ## Context
 
-The portfolio already has a dark visual system and an animated status detail, but it has no shared background treatment or opening moment. The requested name intro and meteor shower belong to the same visual layer, and should work across the home page and project pages without changing their content.
+The portfolio already has a dark visual system and an animated status detail, but it has no shared background treatment or opening moment. The requested name intro and ambient particle field belong to the same visual layer, and should work across the home page and project pages without changing their content.
 
 The intro briefly delays access to the page, so it needs a short duration, a visible skip control, and a once per tab rule. The background must remain decorative and stay quiet behind text and controls.
 
@@ -10,7 +10,7 @@ The intro briefly delays access to the page, so it needs a short duration, a vis
 
 ### Option 1: Shared atmospheric layer with a session intro
 
-Use one shared client layer for the sitewide meteor backdrop and the timed name intro. Keep the intro marker in tab scoped session storage and use the existing Motion package for animation.
+Use one shared client layer for the sitewide particle backdrop and the timed name intro. Keep the intro marker in tab scoped session storage and use the existing Motion package for animation.
 
 **Pros**:
 - Both effects share the existing app shell and design tokens.
@@ -38,7 +38,7 @@ Animate the existing hero heading and add a decorative background without a full
 Render a prebuilt animation behind the site and use a separate name intro.
 
 **Pros**:
-- The meteor appearance can be authored as one fixed visual.
+- The ambient appearance can be authored as one fixed visual.
 
 **Cons**:
 - It adds an asset to load and maintain.
@@ -47,3 +47,5 @@ Render a prebuilt animation behind the site and use a separate name intro.
 ## Rationale
 
 The shared app shell is the right place for effects that should look consistent across home and project routes. Reusing the existing Motion dependency keeps implementation small and lets the page content continue to come from the established server side content model. A short, skippable intro gives the name priority without making visitors wait through a long splash.
+
+_Update 2026-11-02: the CSS meteor shower was replaced by the React Bits WebGL particle field. The field fades out over the first viewport of scroll so it stays atmospheric without competing with dense content, and the animation loop pauses while it is invisible._

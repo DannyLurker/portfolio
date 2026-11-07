@@ -1,4 +1,4 @@
-# Verify: Site atmosphere and name intro · spec 0011 · updated 2026-11-01
+# Verify: Site atmosphere and name intro · spec 0011 · updated 2026-11-02
 
 _Steps derived from spec 0011 acceptance criteria. `/check verify` runs these; `/test` locks the durable ones._
 
@@ -9,8 +9,9 @@ _Steps derived from spec 0011 acceptance criteria. `/check verify` runs these; `
 - [x] Activate `Skip intro` with mouse and keyboard, then try Escape. Confirm each dismisses immediately, focus moves to page content, and the focus indicator is visible. → AC-3
 - [x] After skipping or waiting, refresh and navigate within the same tab. Confirm the intro does not replay. Open a new tab and confirm it can play again. → AC-3
 - [x] Open `/id`. Confirm the skip label reads `Lewati intro` and the name remains `Danny Ng`. → AC-3, AC-7
-- [x] View the home and project pages at desktop and phone widths. Confirm a few slow meteors and faint stars stay behind text, do not cover controls, and do not intercept clicks. → AC-4
-- [x] Enable reduced motion. Confirm the intro is skipped, meteors stop, the still star field remains, and page content is available immediately. → AC-5
+- [x] View the home and project pages at desktop and phone widths. Confirm the soft blue particle field stays behind text, responds to the pointer, does not cover controls, and does not intercept clicks. → AC-4
+- [x] Scroll down one viewport and confirm the particle field fades out; scroll back to the top and confirm it fades in again. → AC-4
+- [x] Enable reduced motion. Confirm the intro is skipped, the particles stop moving, the still particle field remains, and page content is available immediately. → AC-5
 - [x] Block session storage and reload. Confirm the site content remains usable without a blocking intro. Disable JavaScript and confirm the intro does not cover the page. → AC-6
 
 ## Commands
@@ -20,4 +21,6 @@ _Steps derived from spec 0011 acceptance criteria. `/check verify` runs these; `
 
 ## Acceptance-criteria coverage
 
-- AC-1 covered by home and direct project route checks · AC-2 by the intro reveal and timing check · AC-3 by skip localization and tab session checks · AC-4 by visual and pointer checks · AC-5 by reduced motion check · AC-6 by storage and no JavaScript checks · AC-7 by locale and command checks.
+- AC-1 covered by home and direct project route checks · AC-2 by the intro reveal and timing check · AC-3 by skip localization and tab session checks · AC-4 by visual, pointer and scroll fade checks · AC-5 by reduced motion check · AC-6 by storage and no JavaScript checks · AC-7 by locale and command checks.
+
+The particle field, scroll fade and reduced motion behavior were re-checked on 2026-11-02 in Edge at 1440×900 with `prefers-reduced-motion` emulated.

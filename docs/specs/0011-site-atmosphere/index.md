@@ -2,10 +2,11 @@
 
 **Date**: 2026-11-01  
 **Status**: Accepted
+**Updated**: 2026-11-02 — the CSS meteor shower was replaced by a WebGL particle field that fades with page scroll.
 
 ## Summary
 
-The site will open with a brief introduction that shows your name, then reveal the page you requested. A quiet meteor shower will sit behind the site content. Both effects follow the existing dark design system and respect reduced motion settings.
+The site will open with a brief introduction that shows your name, then reveal the page you requested. A quiet, slowly drifting particle field will sit behind the site content and fade away as the visitor scrolls into the page. Both effects follow the existing dark design system and respect reduced motion settings.
 
 ## Requirements
 
@@ -20,8 +21,8 @@ The site will open with a brief introduction that shows your name, then reveal t
 - **AC-1**: On the first route opened in a tab session, including a direct project URL, the site shows a full viewport intro with the exact name from `profile.name` before revealing the requested page. It does not change the destination route.
 - **AC-2**: The name fades up with a soft blue glow. The intro lasts about two seconds total, then fades away to reveal the page.
 - **AC-3**: A visible, keyboard accessible skip button dismisses the intro immediately. Its labels are `Skip intro` in English and `Lewati intro` in Indonesian. Dismissal by skip or timeout marks the intro complete for that tab, so it does not replay on refresh or client navigation.
-- **AC-4**: A low density meteor shower appears behind content on all localized site routes, including project detail pages. A few slow streaks appear at a time, using the existing blue accent palette. The effect does not capture pointer events, receive focus, or add accessible content.
-- **AC-5**: With reduced motion enabled, the intro is skipped and the meteor motion stops. A still star field remains behind the content.
+- **AC-4**: A low density field of soft blue particles appears behind content on all localized site routes, including project detail pages. The particles drift slowly, glow softly, respond to the pointer with a gentle parallax, and fade out as the visitor scrolls past the hero. The effect does not capture pointer events, receive focus, or add accessible content.
+- **AC-5**: With reduced motion enabled, the intro is skipped and particle motion stops. A still particle field remains behind the content.
 - **AC-6**: If browser session storage is unavailable, or client scripting does not run, the page remains usable and the intro does not block access to its content.
 - **AC-7**: `npm run lint` and `npm run build` pass, and both English and Indonesian routes render the intro labels correctly.
 
@@ -29,7 +30,7 @@ The site will open with a brief introduction that shows your name, then reveal t
 
 **Chosen option**: Option 1, a shared atmospheric layer with a session intro.
 
-Show `profile.name` in a centered, full viewport intro on the first route opened in each tab. Fade it up with a soft blue glow, then reveal the requested page after about two seconds. Provide a localized skip button. Use the existing Motion package and a tab scoped session marker. Render a sparse meteor shower behind content on localized routes. Reduced motion skips the intro and leaves only a still star field.
+Show `profile.name` in a centered, full viewport intro on the first route opened in each tab. Fade it up with a soft blue glow, then reveal the requested page after about two seconds. Provide a localized skip button. Use the existing Motion package and a tab scoped session marker. Render a sparse, slowly drifting particle field behind content on localized routes, fading it out with the page scroll. Reduced motion skips the intro, pauses particle movement, and leaves a still particle field.
 
 ## Rationale
 
@@ -59,8 +60,8 @@ No API or server action. The locale layout passes the resolved profile name, loc
 | Show the skip action | English or Indonesian label | New `intro.skip` message in `content/messages.ts` |
 | Decide whether to show the intro | Per tab completion marker | `sessionStorage`; set on skip or timeout |
 | Decide whether to animate | User motion preference | `prefers-reduced-motion`, read by the existing Motion setup |
-| Color the name glow and meteor streaks | Existing blue accent colors | Design tokens in `app/globals.css` |
-| Draw the background stars | Decorative fixed positions | Component styling; no user or profile data |
+| Color the name glow and particles | Existing blue accent colors | Design tokens in `app/globals.css` |
+| Draw the particle field | Decorative generated positions | React Bits Particles component; no user or profile data |
 | Choose the current page | Requested route | Existing Next.js route; the intro does not redirect |
 
 **Key invariants**:
@@ -68,8 +69,8 @@ No API or server action. The locale layout passes the resolved profile name, loc
 - The name always comes from the profile content source.
 - The intro appears no more than once in a tab session.
 - Skipping or finishing the intro never changes the current route.
-- The meteor layer never intercepts pointer or keyboard input.
-- Reduced motion never plays the intro or meteor movement.
+- The particle layer never intercepts pointer or keyboard input.
+- Reduced motion never plays the intro or animates the particles.
 - A session storage failure never hides or disables the site content.
 
 **Security model**:
@@ -84,15 +85,15 @@ None.
 
 - Happy path: open a home or project route in a new tab, see the profile name, then the requested page, verifies **AC-1**, **AC-2**, **AC-3**.
 - Session behavior: skip or wait, refresh and navigate within the tab, and confirm the intro does not replay; open a new tab and confirm it can play again, verifies **AC-3**.
-- Reduced motion: enable reduced motion and confirm the intro and moving streaks are absent while the still stars remain, verifies **AC-5**.
+- Reduced motion: enable reduced motion and confirm the intro and moving particles are absent while the still particle field remains, verifies **AC-5**.
 - Failure: deny or disable session storage and confirm the requested page remains usable, verifies **AC-6**.
-- Accessibility: use the skip button by keyboard and confirm meteor decoration is absent from the accessibility tree, verifies **AC-3**, **AC-4**.
+- Accessibility: use the skip button by keyboard and confirm particle decoration is absent from the accessibility tree, verifies **AC-3**, **AC-4**.
 
 ## Build plan
 
 Use the project's Tracer Bullet approach: build the shared visual layer and the intro together, then verify its states across routes and locales.
 
-1. [x] Add localized skip labels and create the shared meteor background using existing design tokens and Motion, satisfies **AC-4**, **AC-7**.
+1. [x] Add localized skip labels and create the shared particle background from the React Bits Particles component, satisfies **AC-4**, **AC-7**.
 2. [x] Add the name intro, tab session behavior, timeout, skip action, and fail open behavior in the shared locale layout, satisfies **AC-1**, **AC-2**, **AC-3**, **AC-6**.
 3. [x] Add reduced motion behavior, verify accessibility and both locales, then run lint and production build, satisfies **AC-5**, **AC-7**.
 
@@ -104,7 +105,7 @@ Use the project's Tracer Bullet approach: build the shared visual layer and the 
 
 **Negative / tradeoffs**:
 - Visitors wait up to two seconds unless they skip, and the intro requires a small client side state layer.
-- A visitor with reduced motion will not see the animated intro or moving meteors.
+- A visitor with reduced motion will not see the animated intro or particle motion.
 
 **Neutral**:
 - No external asset, API, environment variable, database, or new dependency is required.

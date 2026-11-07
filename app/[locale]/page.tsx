@@ -52,34 +52,38 @@ export default async function HomePage({
         dangerouslySetInnerHTML={{ __html: serializedPersonStructuredData }}
       />
       <Hero locale={locale} profile={profile} messages={messages} />
-      <MetricCards metrics={metrics} messages={messages} />
+      <ScrollReveal>
+        <MetricCards metrics={metrics} messages={messages} />
+      </ScrollReveal>
 
       {siteSections.map((section) =>
         section.id === "work" ? (
           <Fragment key={section.id}>
-            <ProjectIndex
-              locale={locale}
-              projects={projects}
-              messages={messages}
-            />
-            <Suspense fallback={null}>
-              <ContributionHeatmap
+            <ScrollReveal>
+              <ProjectIndex
                 locale={locale}
-                profile={profile}
+                projects={projects}
                 messages={messages}
               />
-            </Suspense>
+            </ScrollReveal>
             <Suspense fallback={null}>
-              <ActivityFeed locale={locale} messages={messages} />
+              <ScrollReveal>
+                <ContributionHeatmap
+                  locale={locale}
+                  profile={profile}
+                  messages={messages}
+                />
+              </ScrollReveal>
             </Suspense>
           </Fragment>
         ) : section.id === "experience" ? (
-          <ExperienceSection
-            key={section.id}
-            locale={locale}
-            roles={experience}
-            messages={messages}
-          />
+          <ScrollReveal key={section.id}>
+            <ExperienceSection
+              locale={locale}
+              roles={experience}
+              messages={messages}
+            />
+          </ScrollReveal>
         ) : (
           <ContactSection
             key={section.id}
