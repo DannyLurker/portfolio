@@ -6,32 +6,32 @@ import {
   getProfile,
   getProjects,
   requireLocale,
-} from "@/lib/content"
-import { Fragment, Suspense } from "react"
-import { Hero } from "@/components/layout/hero"
-import { ExperienceSection } from "@/components/layout/experience-section"
-import { MetricCards } from "@/components/layout/metric-cards"
-import { ProjectIndex } from "@/components/layout/project-index"
-import { ContactSection } from "@/components/layout/contact-section"
-import { ContributionHeatmap } from "@/components/layout/contribution-heatmap"
-import { ActivityFeed } from "@/components/layout/activity-feed"
-import { siteSections } from "@/lib/navigation"
-import { getPageUrl } from "@/lib/seo"
+} from "@/lib/content";
+import { Fragment, Suspense } from "react";
+import { Hero } from "@/components/layout/hero";
+import { ExperienceSection } from "@/components/layout/experience-section";
+import { MetricCards } from "@/components/layout/metric-cards";
+import { ProjectIndex } from "@/components/layout/project-index";
+import { ContactSection } from "@/components/layout/contact-section";
+import { ContributionHeatmap } from "@/components/layout/contribution-heatmap";
+import { ActivityFeed } from "@/components/layout/activity-feed";
+import { siteSections } from "@/lib/navigation";
+import { getPageUrl } from "@/lib/seo";
 
 export default async function HomePage({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale: rawLocale } = await params
-  const locale = requireLocale(rawLocale)
+  const { locale: rawLocale } = await params;
+  const locale = requireLocale(rawLocale);
 
-  const profile = getProfile(locale)
-  const messages = getMessages(locale)
-  const experience = getExperience(locale)
-  const metrics = getMetrics(locale)
-  const projects = getProjects(locale)
-  const links = getLinks()
+  const profile = getProfile(locale);
+  const messages = getMessages(locale);
+  const experience = getExperience(locale);
+  const metrics = getMetrics(locale);
+  const projects = getProjects(locale);
+  const links = getLinks();
   const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -40,11 +40,10 @@ export default async function HomePage({
     description: profile.headline,
     url: getPageUrl(locale),
     sameAs: links.map((link) => link.href),
-  }
-  const serializedPersonStructuredData = JSON.stringify(personStructuredData).replace(
-    /</g,
-    "\\u003c",
-  )
+  };
+  const serializedPersonStructuredData = JSON.stringify(
+    personStructuredData,
+  ).replace(/</g, "\\u003c");
 
   return (
     <>
@@ -88,8 +87,8 @@ export default async function HomePage({
             links={links}
             messages={messages}
           />
-        )
+        ),
       )}
     </>
-  )
+  );
 }

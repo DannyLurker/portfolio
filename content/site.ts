@@ -124,7 +124,7 @@ export const siteContent: SiteContent = {
   ],
   activityRepositories: ["DannyLurker/internal-management-system"],
   skills: {
-    top: ["TypeScript", "Next.js", "PostgreSQL"],
+    top: ["TypeScript", "Next.js", "PostgreSQL", "Laravel"],
     all: [
       "TypeScript",
       "JavaScript",
